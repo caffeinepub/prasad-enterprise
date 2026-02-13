@@ -1,0 +1,72 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T20:47:35.583Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-14",
+        "summary": "Replace the current site logo with the user-uploaded image (\"Prasad Enterprise.png\") and display it consistently across all pages wherever the logo appears (e.g., the sticky header). Ensure the logo renders crisply on light/dark backgrounds and maintains aspect ratio without distortion.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/generated/prasad-enterprise-logo-upload.dim_512x512.png",
+          "frontend/src/components/site/Header.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/public/assets/generated/prasad-enterprise-logo-upload.dim_512x512.png",
+          "frontend/src/components/site/Header.tsx"
+        ]
+      },
+      {
+        "id": "REQ-15",
+        "summary": "Update site-wide contact details to match the user-provided information and show them on all pages (at minimum in both Header and Footer, and also on the Contact page). Use clickable tel: links for both phone numbers and a clickable mailto: link for the email address. Display the full store address exactly as provided.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/config/contact.ts",
+          "frontend/src/components/site/Header.tsx",
+          "frontend/src/components/site/Footer.tsx",
+          "frontend/src/pages/ContactPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/config/contact.ts",
+          "frontend/src/components/site/Header.tsx",
+          "frontend/src/components/site/Footer.tsx",
+          "frontend/src/pages/ContactPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-16",
+        "summary": "On the Contact page, add a \"Visit Our Store\" section that (A) embeds the provided Google Maps iframe code and (B) includes a \"Get Directions\" link/button that opens Google Maps app/web for directions to the store when clicked.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/ContactPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/ContactPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "build-template/README.md",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/public/assets/generated/prasad-enterprise-logo-upload.dim_512x512.png",
+    "frontend/src/components/site/Footer.tsx",
+    "frontend/src/components/site/Header.tsx",
+    "frontend/src/config/contact.ts",
+    "frontend/src/pages/ContactPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

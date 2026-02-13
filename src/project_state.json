@@ -1,0 +1,220 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Build a modern, high-performance lead-generation website for Prasad Enterprise (hardware/building materials) featuring categorized products, 3D/interactive UI effects, and a product inquiry flow that collects selected items and submits a validated lead form. Email sending has been canceled; inquiry submissions will be handled via local storage instead.",
+  "architectural_notes": [
+    "Email integration removed per user; inquiry submissions must be handled via local storage instead of sending formatted emails.",
+    "Google Maps: include embedded iframe for location display plus a separate external 'Get Directions' link that opens Google Maps on web/app."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Square-cropped, background-cleaned version of the provided logo image (prasad-enterprise-logo-upload.dim_512x512.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-cohesive-modern-industrial-chic-visual-theme-for-the-entire-site-using-slate-grey-deep-orange-gold-accents-and-clean-white-with-consistent-typography-spacing-and-component-styling-across-all-pages",
+      "title": "Create a cohesive, modern industrial-chic visual theme for the entire site using Slate Grey, Deep Orange/Gold accents, and Clean White, with consistent typography, spacing, and component styling across all pages.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-site-navigation-and-structure-a-header-with-a-professional-logo-and-the-brand-name-prasad-enterprise-that-is-always-clickable-and-routes-to-the-homepage-include-smooth-transitions-between-pages",
+      "title": "Implement site navigation and structure: a header with a professional logo and the brand name \"Prasad Enterprise\" that is always clickable and routes to the homepage; include smooth transitions between pages.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-homepage-with-a-high-impact-hero-section-showing-the-exact-slogan-prasad-enterprise-building-foundations-delivering-excellence-and-a-categorized-display-of-products-where-each-category-is-a-clickable-3d-styled-card",
+      "title": "Build the Homepage with a high-impact hero section showing the exact slogan: \"Prasad Enterprise: Building Foundations, Delivering Excellence.\" and a categorized display of products where each category is a clickable 3D-styled card.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-category-pages-that-list-the-inventory-items-for-each-category-at-minimum-bricks-red-bricks-brand-suraj-munna-steel-cement-various-rod-sizes-multiple-cement-brands-types-plumbing-pipes-water-tanks-fasteners-nails-screws-paints-exterior-paint-interior-paint-primer-bathroom-water-taps-basins-shower-heads-general-bathroom-materials",
+      "title": "Create Category pages that list the inventory items for each category (at minimum): Bricks (Red Bricks, Brand: Suraj Munna); Steel/Cement (various rod sizes, multiple cement brands/types); Plumbing (pipes, water tanks); Fasteners (nails, screws); Paints (exterior paint, interior paint, primer); Bathroom (water taps, basins, shower heads, general bathroom materials).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-3d-interactivity-implement-3d-hover-tilt-or-scale-with-depth-interactions-on-product-cards-and-or-product-titles-using-css-transforms-no-external-tilt-js-dependency-required-plus-3d-text-effects-for-main-headings",
+      "title": "Add 3D interactivity: implement 3D hover/tilt (or scale with depth) interactions on product cards and/or product titles using CSS transforms (no external Tilt.js dependency required), plus 3D text effects for main headings.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-dynamic-hardware-blueprint-themed-interactive-background-that-subtly-reacts-to-cursor-movement-without-harming-readability-or-performance",
+      "title": "Implement a dynamic, hardware/blueprint-themed interactive background that subtly reacts to cursor movement without harming readability or performance.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-add-to-inquiry-system-for-every-product-with-an-add-to-list-button-including-quantity-management-and-provide-a-persistent-inquiry-list-e-g-header-icon-summary-that-users-can-review",
+      "title": "Implement an \"Add to Inquiry\" system for every product with an \"Add to List\" button, including quantity management, and provide a persistent inquiry list (e.g., header icon/summary) that users can review.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-inquiry-flow-bridge-a-continue-to-inquiry-button-that-navigates-to-the-final-lead-form-and-includes-the-selected-products-quantities-in-the-submission-payload",
+      "title": "Implement the inquiry flow bridge: a \"Continue to Inquiry\" button that navigates to the final lead form and includes the selected products/quantities in the submission payload.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-lead-form-with-strict-validation-for-mandatory-fields-name-phone-number-and-email-address-include-optional-home-address-textarea-and-message-textarea-after-successful-submit-show-the-provided-success-message-exactly",
+      "title": "Create the Lead Form with strict validation for mandatory fields Name, Phone Number, and Email Address; include optional Home Address (textarea) and Message (textarea). After successful submit, show the provided success message exactly.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-cancel-email-sending-entirely-do-not-attempt-to-send-emails-from-the-form-instead-store-inquiry-submissions-locally-in-the-browser-including-timestamp-contact-details-address-message-and-selected-products-quantities-and-provide-a-simple-submission-saved-state-as-part-of-the-success-flow",
+      "title": "Cancel email sending entirely: do not attempt to send emails from the form. Instead, store inquiry submissions locally in the browser (including timestamp, contact details, address/message, and selected products/quantities) and provide a simple \"Submission saved\" state as part of the success flow.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-contact-page-that-includes-clickable-call-now-phone-numbers-and-email-us-links-using-tel-and-mailto-and-display-the-operational-hours-exactly-as-provided",
+      "title": "Build a Contact page that includes clickable \"Call Now\" phone numbers and \"Email Us\" links using tel: and mailto:, and display the operational hours exactly as provided.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-full-responsiveness-mobile-tablet-desktop-and-optimize-for-fast-loading-despite-3d-and-background-effects-e-g-limit-heavy-animations-prefer-css-transforms-and-avoid-blocking-main-thread",
+      "title": "Ensure full responsiveness (mobile/tablet/desktop) and optimize for fast loading despite 3D and background effects (e.g., limit heavy animations, prefer CSS transforms, and avoid blocking main thread).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-and-render-generated-brand-background-images-as-static-frontend-assets-under-frontend-public-assets-generated-and-use-them-in-the-ui-logo-in-header-blueprint-industrial-background-texture-in-the-site-background",
+      "title": "Add and render generated brand/background images as static frontend assets under frontend/public/assets/generated and use them in the UI (logo in header; blueprint/industrial background texture in the site background).",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-site-logo-with-the-user-uploaded-image-prasad-enterprise-png-and-display-it-consistently-across-all-pages-wherever-the-logo-appears-e-g-the-sticky-header-ensure-the-logo-renders-crisply-on-light-dark-backgrounds-and-maintains-aspect-ratio-without-distortion",
+      "title": "Replace the current site logo with the user-uploaded image (\"Prasad Enterprise.png\") and display it consistently across all pages wherever the logo appears (e.g., the sticky header). Ensure the logo renders crisply on light/dark backgrounds and maintains aspect ratio without distortion.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-site-wide-contact-details-to-match-the-user-provided-information-and-show-them-on-all-pages-at-minimum-in-both-header-and-footer-and-also-on-the-contact-page-use-clickable-tel-links-for-both-phone-numbers-and-a-clickable-mailto-link-for-the-email-address-display-the-full-store-address-exactly-as-provided",
+      "title": "Update site-wide contact details to match the user-provided information and show them on all pages (at minimum in both Header and Footer, and also on the Contact page). Use clickable tel: links for both phone numbers and a clickable mailto: link for the email address. Display the full store address exactly as provided.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-contact-page-add-a-visit-our-store-section-that-a-embeds-the-provided-google-maps-iframe-code-and-b-includes-a-get-directions-link-button-that-opens-google-maps-app-web-for-directions-to-the-store-when-clicked",
+      "title": "On the Contact page, add a \"Visit Our Store\" section that (A) embeds the provided Google Maps iframe code and (B) includes a \"Get Directions\" link/button that opens Google Maps app/web for directions to the store when clicked.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Implement industrial-chic visual design (slate grey + deep orange/gold + white), premium transitions, 3D text effects for headings, and 3D hover/tilt interactions on product cards/titles",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add interactive dynamic hardware/blueprint-themed background that reacts to cursor movement",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Create site structure & navigation: header with clickable logo/name to homepage; homepage hero slogan; category cards linking to category pages; contact page with tel: and mailto: links",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Build categorized product catalog pages with listed inventory items (bricks, steel/cement, plumbing, fasteners, paints, bathroom)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Implement 'Add to Inquiry' selection list with 'Continue to Inquiry' bridge to final lead form",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Implement lead form with strict validation for mandatory fields (Name, Phone, Email) plus Address & Message, and display provided success message after submit",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Store inquiry submissions locally (no email sending) including customer details and selected products/quantities",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add business operational hours section/content (Mon–Fri 7–6, Sat 8–6, Sun 10–3 occasionally)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Ensure full responsiveness (mobile/tablet/desktop) and optimize performance for fast loading despite 3D effects",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Replace site header/logo across all pages with the provided business logo",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Update site-wide contact details: add both phone numbers, email, and full store address on all pages (e.g., header/footer + Contact page)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add 'Visit our store' section with embedded Google Maps iframe and a 'Get Directions' link/button that opens Google Maps app/web",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Prasad Enterprise",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

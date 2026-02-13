@@ -1,74 +1,32 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Site-wide logo + contact info refresh, and Contact page map embed with directions link",
+  "title": "Set primary site URL to prasadenterprise.caffeine.xyz and remove draft/www URL references",
   "requirements": [
     {
-      "id": "REQ-14",
-      "summary": "Apply the user-uploaded logo image site-wide wherever the logo appears, ensuring crisp rendering and preserved aspect ratio.",
+      "id": "REQ-31",
+      "summary": "Set SITE_CONFIG.url to the canonical non-www production URL and remove any draft/www URL references from user-facing UI copy, links, and metadata derived from SITE_CONFIG.",
       "acceptanceCriteria": [
-        "Header logo image is updated to the provided uploaded logo and appears on every route (Home, Category, Inquiry, Lead Form, Success, Contact).",
-        "Logo maintains correct aspect ratio (no stretching) and looks sharp at common sizes (e.g., ~40–48px in header).",
-        "No references remain to the old placeholder/logo asset in the rendered UI."
+        "frontend/src/config/site.ts sets SITE_CONFIG.url to exactly \"https://prasadenterprise.caffeine.xyz\" (no www).",
+        "A project-wide search finds no occurrences of \"significant-blush-1gq-draft.caffeine.xyz\" in frontend source code or user-facing text.",
+        "A project-wide search finds no occurrences of \"https://www.prasadenterprise.caffeine.xyz\" used as the primary site URL in frontend source code or user-facing text.",
+        "Any UI element or link that intentionally represents the site’s primary URL (if present) uses \"https://prasadenterprise.caffeine.xyz\"."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/generated/prasad-enterprise-logo-upload.dim_512x512.png",
-          "operation": "create",
-          "description": "Add the required generated logo asset for the uploaded image so it can be used consistently across the app."
-        },
-        {
-          "path": "frontend/src/components/site/Header.tsx",
+          "path": "frontend/src/config/site.ts",
           "operation": "modify",
-          "description": "Update the header to use frontend/public/assets/generated/prasad-enterprise-logo-upload.dim_512x512.png for the logo image, and ensure styling keeps it sharp and distortion-free (object-contain, appropriate sizing, and light/dark-safe presentation). Use existing shadcn-ui patterns already present in the header (e.g., Button). Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "summary": "Update and display the provided contact details site-wide (Header, Footer, and Contact page) with clickable tel/mailto links and the exact store address.",
-      "acceptanceCriteria": [
-        "Header and Footer both display: +91 7384327313, +91 9955678588, prasadenterprise.info@gmail.com, and the full store address.",
-        "Both phone numbers are clickable and use tel:+917384327313 and tel:+919955678588 respectively.",
-        "Email is clickable and uses mailto:prasadenterprise.info@gmail.com.",
-        "Contact page replaces the current placeholder phone numbers and placeholder emails with the user-provided phone numbers and email address, and shows the store address exactly as provided."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/config/contact.ts",
-          "operation": "create",
-          "description": "Create a single source of truth for contact details (two phone numbers, email, and the full store address exactly as provided) to ensure consistent display across Header, Footer, and Contact page."
-        },
-        {
-          "path": "frontend/src/components/site/Header.tsx",
-          "operation": "modify",
-          "description": "Add visible contact details in the Header using values from frontend/src/config/contact.ts, including clickable tel:+917384327313 and tel:+919955678588 links, and mailto:prasadenterprise.info@gmail.com. Ensure it remains usable on mobile/desktop without disrupting navigation. Use existing shadcn-ui Button styling where appropriate. Verify the component's usage instructions before implementing."
+          "description": "Update SITE_CONFIG.url to exactly \"https://prasadenterprise.caffeine.xyz\" (no \"www\", no trailing slash) and ensure no other SITE_CONFIG-derived metadata/constants embed the draft or www variant."
         },
         {
           "path": "frontend/src/components/site/Footer.tsx",
           "operation": "modify",
-          "description": "Update the Footer to display the provided phone numbers, email, and full store address (exact text) using values from frontend/src/config/contact.ts, with clickable tel:/mailto: links. Keep existing social placeholder links unchanged per non-goals."
+          "description": "Audit footer content for any user-facing references to the primary site URL; ensure any intentional display/link uses SITE_CONFIG.url (canonical non-www). Remove any unused SITE_CONFIG import if the footer does not display the site URL."
         },
         {
-          "path": "frontend/src/pages/ContactPage.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Replace placeholder phone numbers and emails with the provided values from frontend/src/config/contact.ts, add the store address exactly as provided, and ensure phone/email are clickable via tel:/mailto:. Continue using existing shadcn-ui Card/Button components already used on this page. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "summary": "Add a 'Visit Our Store' section on the Contact page with the provided Google Maps iframe embed and a 'Get Directions' control that opens Google Maps for directions.",
-      "acceptanceCriteria": [
-        "The Contact page includes an embedded Google Map using the exact iframe src provided by the user.",
-        "A \"Get Directions\" UI control is present and opens Google Maps in a new tab/window (or app when available) to get directions to the store.",
-        "The \"Get Directions\" UI control is clearly associated with the store location section and remains usable on mobile and desktop."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ContactPage.tsx",
-          "operation": "modify",
-          "description": "In the 'Visit Our Store' section, embed the provided Google Maps iframe using the exact src value from the request, and convert the existing 'Get Directions' button into an outbound link that opens Google Maps directions (new tab/window, with appropriate rel attributes). Ensure responsive sizing and clear association with the store location section. Use the shadcn-ui Button component (asChild link pattern) already used in this page. Verify the component's usage instructions before implementing."
+          "description": "Audit static document metadata for any hardcoded references to the draft URL or www variant; update/remove them so the app does not display or reference those URLs in user-facing metadata."
         }
       ]
     }

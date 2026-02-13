@@ -1,6 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { Home, Phone, Mail } from 'lucide-react';
+import { Home, Phone, Mail, Image } from 'lucide-react';
 import InquirySummaryButton from '../inquiry/InquirySummaryButton';
 import { CONTACT_INFO } from '@/config/contact';
 
@@ -36,7 +36,7 @@ export default function Header() {
             className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
           >
             <img
-              src="/assets/generated/prasad-enterprise-logo-upload.dim_512x512.png"
+              src="/assets/Prasad Enterprise.png"
               alt="Prasad Enterprise Logo"
               className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform group-hover:scale-105"
             />
@@ -53,6 +53,14 @@ export default function Header() {
             >
               <Home className="mr-2 h-4 w-4" />
               Home
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate({ to: '/gallery' })}
+              className="text-base"
+            >
+              <Image className="mr-2 h-4 w-4" />
+              Gallery
             </Button>
             <Button
               variant="ghost"

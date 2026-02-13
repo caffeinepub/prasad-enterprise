@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-the-current-site-logo-with-the-user-uploaded-image-prasad-enterprise-png-and-display-it-consistently-across-all-pages-wherever-the-logo-appears-e-g-the-sticky-header-ensure-the-logo-renders-crisply-on-light-dark-backgrounds-and-maintains-aspect-ratio-without-distortion",
-      "featureTitle": "Replace the current site logo with the user-uploaded image (\"Prasad Enterprise.png\") and display it consistently across all pages wherever the logo appears (e.g., the sticky header). Ensure the logo renders crisply on light/dark backgrounds and maintains aspect ratio without distortion.",
+      "featureId": "feature-update-the-app-s-primary-site-url-configuration-to-use-exactly-https-prasadenterprise-caffeine-xyz-no-www-and-ensure-the-application-does-not-display-or-reference-the-draft-url-https-significant-blush-1gq-draft-caffeine-xyz-or-the-https-www-prasadenterprise-caffeine-xyz-variant-anywhere-in-user-facing-ui-copy-links-intended-to-represent-the-site-s-primary-url-or-metadata-derived-from-site-config",
+      "featureTitle": "Update the app’s primary site URL configuration to use exactly \"https://prasadenterprise.caffeine.xyz/\" (no \"www\") and ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" or the \"https://www.prasadenterprise.caffeine.xyz\" variant anywhere in user-facing UI copy, links intended to represent the site’s primary URL, or metadata derived from SITE_CONFIG.",
       "files": [
-        "frontend/src/components/site/Header.tsx"
+        "frontend/src/config/site.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -15,46 +15,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-14"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-site-wide-contact-details-to-match-the-user-provided-information-and-show-them-on-all-pages-at-minimum-in-both-header-and-footer-and-also-on-the-contact-page-use-clickable-tel-links-for-both-phone-numbers-and-a-clickable-mailto-link-for-the-email-address-display-the-full-store-address-exactly-as-provided",
-      "featureTitle": "Update site-wide contact details to match the user-provided information and show them on all pages (at minimum in both Header and Footer, and also on the Contact page). Use clickable tel: links for both phone numbers and a clickable mailto: link for the email address. Display the full store address exactly as provided.",
-      "files": [
-        "frontend/src/components/site/Footer.tsx",
-        "frontend/src/components/site/Header.tsx",
-        "frontend/src/config/contact.ts",
-        "frontend/src/pages/ContactPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-15"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-on-the-contact-page-add-a-visit-our-store-section-that-a-embeds-the-provided-google-maps-iframe-code-and-b-includes-a-get-directions-link-button-that-opens-google-maps-app-web-for-directions-to-the-store-when-clicked",
-      "featureTitle": "On the Contact page, add a \"Visit Our Store\" section that (A) embeds the provided Google Maps iframe code and (B) includes a \"Get Directions\" link/button that opens Google Maps app/web for directions to the store when clicked.",
-      "files": [
-        "frontend/src/pages/ContactPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-16"
+        "REQ-31"
       ],
       "confidence": "high"
     }

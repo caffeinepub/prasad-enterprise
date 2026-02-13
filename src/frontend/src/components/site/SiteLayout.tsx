@@ -7,7 +7,9 @@ import PageTransition from './PageTransition';
 export default function SiteLayout() {
   return (
     <div className="relative min-h-screen flex flex-col">
+      {/* Interactive canvas background - on all pages */}
       <InteractiveBackground />
+      
       <Header />
       <main className="flex-1 relative z-10">
         <PageTransition>

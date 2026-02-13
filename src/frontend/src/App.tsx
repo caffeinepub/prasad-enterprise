@@ -6,6 +6,7 @@ import InquiryPage from './pages/InquiryPage';
 import LeadFormPage from './pages/LeadFormPage';
 import LeadSuccessPage from './pages/LeadSuccessPage';
 import ContactPage from './pages/ContactPage';
+import GalleryPage from './pages/GalleryPage';
 import SiteLayout from './components/site/SiteLayout';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -49,6 +50,12 @@ const contactRoute = createRoute({
   component: ContactPage,
 });
 
+const galleryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/gallery',
+  component: GalleryPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   categoryRoute,
@@ -56,6 +63,7 @@ const routeTree = rootRoute.addChildren([
   leadFormRoute,
   leadSuccessRoute,
   contactRoute,
+  galleryRoute,
 ]);
 
 const router = createRouter({ routeTree });

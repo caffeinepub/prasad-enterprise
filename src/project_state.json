@@ -1,14 +1,22 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
-  "summary": "Build a modern, high-performance lead-generation website for Prasad Enterprise (hardware/building materials) featuring categorized products, 3D/interactive UI effects, and a product inquiry flow that collects selected items and submits a validated lead form. Email sending has been canceled; inquiry submissions will be handled via local storage instead.",
+  "projectStateVersion": 17,
+  "summary": "Build a modern, high-performance lead-generation website for Prasad Enterprise (hardware/building materials) featuring categorized products, 3D/interactive UI effects, and a product inquiry flow that collects selected items and submits a validated lead form. Email sending has been canceled; inquiry submissions will be handled via local storage instead. Add a dedicated, category-wise Gallery page with filters and 3D/hover effects; gallery items use manually provided images with auto-generated product names and categories, and include a small disclaimer “(this is a sample image)”. Remove “TATA steel” branding wherever it appears. Preserve the site URL as https://prasadenterprise.caffeine.xyz. The Home page background should use the older blueprint/industrial interactive background (no fullscreen fixed stock video).",
   "architectural_notes": [
     "Email integration removed per user; inquiry submissions must be handled via local storage instead of sending formatted emails.",
-    "Google Maps: include embedded iframe for location display plus a separate external 'Get Directions' link that opens Google Maps on web/app."
+    "Google Maps: include embedded iframe for location display plus a separate external 'Get Directions' link that opens Google Maps on web/app.",
+    "Logo must use the exact user-uploaded image file (\"Prasad Enterprise.png\") consistently across the site.",
+    "Add per-product-item realistic images sourced from free stock (ensure licensing allows use); integrate into product item UI.",
+    "Add a dedicated Gallery page with category-wise browsing, filters, and 3D/hover effects, using images added manually as static assets (no user upload UI).",
+    "Gallery item product names and categories should be auto-generated using both detected text and object/material recognition; allow user to request corrections if needed.",
+    "Append “(this is a sample image)” as a small-font disclaimer alongside each gallery product name.",
+    "Home page: revert background to the older blueprint/industrial InteractiveBackground (remove the fullscreen fixed brick-kiln stock video behavior on Home only).",
+    "Preserve the public site URL name as https://prasadenterprise.caffeine.xyz (no www)."
   ],
-  "known_issues": [],
+  "known_issues": [
+    "Site is currently not using the exact user-provided logo; must re-implement logo correctly."
+  ],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Square-cropped, background-cleaned version of the provided logo image (prasad-enterprise-logo-upload.dim_512x512.png)",
   "existing_features": [
     {
       "id": "feature-create-a-cohesive-modern-industrial-chic-visual-theme-for-the-entire-site-using-slate-grey-deep-orange-gold-accents-and-clean-white-with-consistent-typography-spacing-and-component-styling-across-all-pages",
@@ -137,6 +145,126 @@
         "REQ-16"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-site-header-logo-to-use-the-exact-user-uploaded-image-file-prasad-enterprise-png-not-a-generated-placeholder-and-ensure-the-correct-logo-renders-consistently-wherever-the-logo-appears",
+      "title": "Update the site header logo to use the exact user-uploaded image file \"Prasad Enterprise.png\" (not a generated placeholder), and ensure the correct logo renders consistently wherever the logo appears.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-one-realistic-free-stock-sample-image-for-every-individual-product-item-in-the-inventory-store-the-images-as-static-frontend-assets-and-render-each-product-s-image-in-the-product-cards-on-category-pages",
+      "title": "Add one realistic free-stock sample image for every individual product item in the inventory, store the images as static frontend assets, and render each product’s image in the product cards on category pages.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-brand-name-tata-steel-and-case-variants-like-tata-steel-everywhere-it-appears-in-the-website-s-product-catalog-while-keeping-the-related-steel-products-available-do-not-delete-the-products-only-remove-the-branding-text",
+      "title": "Remove the brand name “TATA steel” (and case variants like “TATA Steel”) everywhere it appears in the website’s product catalog while keeping the related steel products available (do not delete the products; only remove the branding text).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-dedicated-gallery-page-that-displays-gallery-items-category-wise-supports-filtering-by-category-and-uses-the-existing-3d-hover-interaction-styling-consistent-with-product-category-cards",
+      "title": "Add a dedicated Gallery page that displays gallery items category-wise, supports filtering by category, and uses the existing 3D/hover interaction styling consistent with product/category cards.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-navigation-access-to-the-gallery-page-from-the-site-header-and-footer-so-users-can-reach-it-easily-from-any-page",
+      "title": "Add navigation access to the Gallery page from the site header and footer so users can reach it easily from any page.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-gallery-data-handling-where-gallery-images-are-added-manually-as-static-project-assets-no-in-app-upload-ui-and-each-gallery-item-displays-an-auto-generated-product-name-and-an-auto-detected-category-derived-from-both-a-detected-text-cues-and-b-object-material-cues-implemented-without-using-external-ai-llm-services-also-append-the-disclaimer-this-is-a-sample-image-next-to-each-displayed-product-name-in-very-small-font",
+      "title": "Implement gallery data handling where gallery images are added manually as static project assets (no in-app upload UI), and each gallery item displays an auto-generated product name and an auto-detected category derived from BOTH (A) detected text cues and (B) object/material cues—implemented without using external AI/LLM services; also append the disclaimer “(this is a sample image)” next to each displayed product name in very small font.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-website-url-name-exactly-as-https-www-prasadenterprise-caffeine-xyz-by-ensuring-the-app-does-not-introduce-or-display-any-different-site-url-domain-in-code-ui-copy-or-links-intended-to-represent-the-site-s-primary-url",
+      "title": "Preserve the website URL name exactly as https://www.prasadenterprise.caffeine.xyz by ensuring the app does not introduce or display any different site URL/domain in code, UI copy, or links intended to represent the site’s primary URL.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-fullscreen-fixed-position-background-stock-video-brick-kiln-scene-with-laborers-carrying-bricks-and-loading-a-tractor-that-appears-under-the-home-page-content-and-remains-fixed-while-the-user-scrolls-the-home-page",
+      "title": "Add a fullscreen fixed-position background stock video (brick kiln scene with laborers carrying bricks and loading a tractor) that appears under the Home page content and remains fixed while the user scrolls the Home page.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-configure-the-home-page-background-video-to-autoplay-loop-continuously-and-play-muted-visuals-only-with-safe-fallbacks-for-browsers-devices-that-restrict-autoplay",
+      "title": "Configure the Home page background video to autoplay, loop continuously, and play muted (visuals only), with safe fallbacks for browsers/devices that restrict autoplay.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-existing-site-wide-interactivebackground-canvas-remains-compatible-with-the-new-home-page-video-background-by-maintaining-correct-z-index-layering-video-behind-interactivebackground-and-page-content-unless-otherwise-required-for-readability",
+      "title": "Ensure the existing site-wide InteractiveBackground canvas remains compatible with the new Home page video background by maintaining correct z-index layering (video behind InteractiveBackground and page content, unless otherwise required for readability).",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-home-page-fullscreen-fixed-background-video-renders-and-is-visibly-playing-behind-the-home-page-content-brick-kiln-scene-including-fixing-any-asset-path-missing-static-file-or-route-conditional-issues-that-currently-prevent-the-video-from-appearing",
+      "title": "Ensure the Home page fullscreen fixed background video renders and is visibly playing behind the Home page content (brick kiln scene), including fixing any asset-path, missing-static-file, or route-conditional issues that currently prevent the video from appearing.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-layering-so-the-home-page-background-video-stays-behind-the-interactivebackground-canvas-and-behind-all-page-ui-while-remaining-visible-i-e-not-hidden-by-page-backgrounds-or-stacking-contexts",
+      "title": "Fix layering so the Home page background video stays behind the InteractiveBackground canvas and behind all page UI, while remaining visible (i.e., not hidden by page backgrounds or stacking contexts).",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-home-page-background-video-behavior-match-the-specification-autoplay-loop-continuously-muted-visuals-only-and-include-safe-fallbacks-for-browsers-devices-that-restrict-autoplay-without-breaking-the-ui",
+      "title": "Make the Home page background video behavior match the specification: autoplay, loop continuously, muted (visuals only), and include safe fallbacks for browsers/devices that restrict autoplay without breaking the UI.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-fullscreen-fixed-brick-kiln-background-video-from-the-home-route-so-that-the-home-page-background-matches-the-older-blueprint-industrial-interactive-background-style-instead",
+      "title": "Remove the fullscreen fixed brick-kiln background video from the Home route (/) so that the Home page background matches the older blueprint/industrial interactive background style instead.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-app-s-primary-site-url-configuration-to-use-exactly-https-prasadenterprise-caffeine-xyz-no-www-and-ensure-the-application-does-not-display-or-reference-the-draft-url-https-significant-blush-1gq-draft-caffeine-xyz-or-the-https-www-prasadenterprise-caffeine-xyz-variant-anywhere-in-user-facing-ui-copy-links-intended-to-represent-the-site-s-primary-url-or-metadata-derived-from-site-config",
+      "title": "Update the app’s primary site URL configuration to use exactly \"https://prasadenterprise.caffeine.xyz/\" (no \"www\") and ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" or the \"https://www.prasadenterprise.caffeine.xyz\" variant anywhere in user-facing UI copy, links intended to represent the site’s primary URL, or metadata derived from SITE_CONFIG.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -209,6 +337,36 @@
     {
       "id": "AR-12",
       "summary": "Add 'Visit our store' section with embedded Google Maps iframe and a 'Get Directions' link/button that opens Google Maps app/web",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add realistic free-stock sample images for every individual product item and display them in product listings/cards",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Remove the brand name “TATA steel” wherever it appears; keep the related products but without that branding (unless otherwise specified later)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add a dedicated Gallery page: category-wise display with filters plus 3D/hover effects; images are added manually as project assets; auto-generate product names (text + object/material cues) and auto-detect categories (text + object/material cues); append a small-font disclaimer “(this is a sample image)” next to each product name",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Preserve/keep the website URL name as https://www.prasadenterprise.caffeine.xyz",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Set/preserve the primary public site URL as https://prasadenterprise.caffeine.xyz (no draft URL; no www) by pushing the current draft live",
       "reqIds": [],
       "status": "pending"
     }

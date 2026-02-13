@@ -1,46 +1,33 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T20:47:35.580Z",
-  "summary": "Diff adds a centralized CONTACT_INFO config and updates Header/Footer/Contact page to use it. Footer now shows both phones, email, and address with tel:/mailto: links. Header shows only one phone and the email in the top bar. Contact page updates phone/email buttons, and config includes Google Maps embed + directions URLs, but the provided ContactPage diff is truncated so the actual map iframe + Get Directions control cannot be fully verified from the shown code.",
+  "generatedAt": "2026-02-13T22:51:53.346Z",
+  "summary": "REQ-31 is partially implemented: SITE_CONFIG.url was updated to the requested primary URL, but the diff summary does not provide evidence that all draft URL and www-variant references were removed project-wide from user-facing UI copy/links/metadata.",
   "missing_requirements": [
     {
-      "id": "REQ-14",
-      "requirement": "Replace the current site logo with the user-uploaded image and display it consistently across all pages wherever the logo appears; ensure crisp rendering and no remaining references to the old placeholder/logo asset in the rendered UI.",
-      "reason": "Only Header.tsx is shown updated to use the uploaded logo asset. The diff summary does not provide evidence that any other logo instances (if any exist elsewhere) were updated, nor does it show removal of all old logo references beyond the header snippet.",
+      "id": "REQ-31",
+      "requirement": "Ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" anywhere in frontend source code or user-facing text (project-wide).",
+      "reason": "The diff summary shows only a change to `frontend/src/config/site.ts` and does not show any removals/updates in other files that would eliminate existing draft-URL occurrences. With the provided evidence, compliance with the project-wide 'no occurrences' acceptance criterion cannot be verified.",
       "evidence": [
-        "frontend/src/components/site/Header.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/src/config/site.ts",
+        "frontend-file-summaries.txt (truncated)"
       ]
     },
     {
-      "id": "REQ-15",
-      "requirement": "Header and Footer both display: +91 7384327313, +91 9955678588, prasadenterprise.info@gmail.com, and the full store address.",
-      "reason": "Header top bar shows only the first phone number and the email; it does not show the second phone number or the address. Footer shows both phones, email, and address.",
+      "id": "REQ-31",
+      "requirement": "Ensure the application does not display or reference the \"https://www.prasadenterprise.caffeine.xyz\" variant as the primary site URL anywhere in frontend source code or user-facing text (project-wide).",
+      "reason": "Only `SITE_CONFIG.url` is shown as updated; there is no evidence in the diff summary of updates/removals across the rest of the frontend to eliminate any existing `https://www.prasadenterprise.caffeine.xyz` occurrences. The acceptance criterion requires project-wide absence, which cannot be confirmed from the diff summary.",
       "evidence": [
-        "frontend/src/components/site/Header.tsx",
-        "frontend/src/components/site/Footer.tsx"
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "requirement": "On the Contact page, add a \"Visit Our Store\" section that embeds the provided Google Maps iframe (using the exact iframe src provided) and includes a \"Get Directions\" control opening Google Maps in a new tab/window (or app).",
-      "reason": "CONTACT_INFO includes mapEmbedUrl and mapDirectionsUrl, but the ContactPage.tsx diff content is truncated before any embedded iframe or Get Directions link/button is shown, so the implementation and use of the exact iframe src cannot be verified from the provided diff excerpt.",
-      "evidence": [
-        "frontend/src/config/contact.ts",
-        "frontend/src/pages/ContactPage.tsx (truncated)",
-        "frontend-file-summaries.txt"
+        "frontend/src/config/site.ts",
+        "frontend-file-summaries.txt (truncated)"
       ]
     }
   ],
   "hallucinated_features": [],
-  "confidence": 0.66,
+  "confidence": 0.62,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/site/Footer.tsx",
-    "frontend/src/components/site/Header.tsx",
-    "frontend/src/config/contact.ts",
-    "frontend/src/pages/ContactPage.tsx",
+    "frontend/src/config/site.ts",
     "project_state.json"
   ]
 }

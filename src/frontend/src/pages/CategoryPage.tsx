@@ -62,6 +62,17 @@ export default function CategoryPage() {
               key={product.id}
               className="card-3d overflow-hidden border-2 hover:border-primary/30 transition-all"
             >
+              {/* Product Image */}
+              <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted">
+                <img
+                  src={product.imageSrc}
+                  alt={product.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform hover:scale-105"
+                />
+              </div>
+
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">

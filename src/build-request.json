@@ -1,78 +1,52 @@
 {
   "kind": "build_request",
-  "title": "Apply uploaded logo site-wide, update contact details everywhere, and add Google Maps embed + Get Directions link",
+  "title": "Set primary site URL to prasadenterprise.caffeine.xyz (no www) and remove draft URL references",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-14",
-      "text": "Replace the current site logo with the user-uploaded image (\"Prasad Enterprise.png\") and display it consistently across all pages wherever the logo appears (e.g., the sticky header). Ensure the logo renders crisply on light/dark backgrounds and maintains aspect ratio without distortion.",
+      "id": "REQ-31",
+      "text": "Update the app’s primary site URL configuration to use exactly \"https://prasadenterprise.caffeine.xyz/\" (no \"www\") and ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" or the \"https://www.prasadenterprise.caffeine.xyz\" variant anywhere in user-facing UI copy, links intended to represent the site’s primary URL, or metadata derived from SITE_CONFIG.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-5",
+          "msg-6",
+          "msg-7"
         ],
         "quotes": [
-          "use this as my business logo on all the pages."
+          "change the URL from this \"https://significant-blush-1gq-draft.caffeine.xyz/\" to this \"https://prasadenterprise.caffeine.xyz/\"  build",
+          "Your site is already configured to use the URL:\nhttps://www.prasadenterprise.caffeine.xyz\n\n...Do you want me to push the current draft live so the main URL becomes prasadenterprise.caffeine.xyz?",
+          "yes"
         ]
       },
       "acceptanceCriteria": [
-        "Header logo image is updated to the provided uploaded logo and appears on every route (Home, Category, Inquiry, Lead Form, Success, Contact).",
-        "Logo maintains correct aspect ratio (no stretching) and looks sharp at common sizes (e.g., ~40–48px in header).",
-        "No references remain to the old placeholder/logo asset in the rendered UI."
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "text": "Update site-wide contact details to match the user-provided information and show them on all pages (at minimum in both Header and Footer, and also on the Contact page). Use clickable tel: links for both phone numbers and a clickable mailto: link for the email address. Display the full store address exactly as provided.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "My contact details - \nPhone number - +91 7384327313 and +91 9955678588\nEmail - prasadenterprise.info@gmail.com\nStore Address - Prasad Enterprises, Babubasa, Champasari Rd, Devidanga, Siliguri, West Bengal 734003.\n\n2 - on All"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Header and Footer both display: +91 7384327313, +91 9955678588, prasadenterprise.info@gmail.com, and the full store address.",
-        "Both phone numbers are clickable and use tel:+917384327313 and tel:+919955678588 respectively.",
-        "Email is clickable and uses mailto:prasadenterprise.info@gmail.com.",
-        "Contact page replaces the current placeholder phone numbers and placeholder emails with the user-provided phone numbers and email address, and shows the store address exactly as provided."
-      ]
-    },
-    {
-      "id": "REQ-16",
-      "text": "On the Contact page, add a \"Visit Our Store\" section that (A) embeds the provided Google Maps iframe code and (B) includes a \"Get Directions\" link/button that opens Google Maps app/web for directions to the store when clicked.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Add this code under \"Get Direction\", under visit our store, when someone clicks on this link, redirect them to google maps app/web to get firection to the store - <iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3562.1405242591272!2d88.4175046!3d26.771790199999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e441b08d865489%3A0x26f26a46b2653836!2sPrasad%20Enterprises!5e0!3m2!1sen!2sin!4v1771014308362!5m2!1sen!2sin\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
-          "3 - A"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The Contact page includes an embedded Google Map using the exact iframe src provided by the user.",
-        "A \"Get Directions\" UI control is present and opens Google Maps in a new tab/window (or app when available) to get directions to the store.",
-        "The \"Get Directions\" UI control is clearly associated with the store location section and remains usable on mobile and desktop."
+        "frontend/src/config/site.ts sets SITE_CONFIG.url to exactly \"https://prasadenterprise.caffeine.xyz\" (no www).",
+        "A project-wide search finds no occurrences of \"significant-blush-1gq-draft.caffeine.xyz\" in frontend source code or user-facing text.",
+        "A project-wide search finds no occurrences of \"https://www.prasadenterprise.caffeine.xyz\" used as the primary site URL in frontend source code or user-facing text.",
+        "Any UI element or link that intentionally represents the site’s primary URL (if present) uses \"https://prasadenterprise.caffeine.xyz\"."
       ]
     }
   ],
   "constraints": [
-    "Frontend paths listed as immutable must not be edited (e.g., frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, and frontend/src/components/ui).",
-    "Do not add email-sending or any external messaging integration; contact actions must remain tel:/mailto: only.",
-    "Backend must remain single-actor Motoko; no new backend requirements are introduced for these changes."
+    "Do not edit any files under frontend/src/components/ui or other paths listed in frontend.immutablePaths.",
+    "Keep the backend as a single Motoko actor (no additional backend services/canisters)."
   ],
   "nonGoals": [
-    "Adding social media links/accounts (Footer currently has placeholders; leave unchanged unless explicitly requested).",
-    "Implementing real-time location features, geolocation, or map APIs beyond the provided iframe embed and an outbound Google Maps directions link."
+    "Implementing DNS changes, SSL, or platform deployment actions (e.g., \"Push Live\") beyond updating the app’s code/configuration.",
+    "Adding new pages or features unrelated to site URL configuration."
   ],
   "imageRequirements": {
-    "required": [
-      "Square-cropped, background-cleaned version of the provided logo image (prasad-enterprise-logo-upload.dim_512x512.png)"
-    ],
+    "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

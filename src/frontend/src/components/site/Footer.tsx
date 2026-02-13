@@ -1,6 +1,8 @@
+import { Link } from '@tanstack/react-router';
 import { SiFacebook, SiInstagram, SiX } from 'react-icons/si';
 import { Heart, Phone, Mail, MapPin } from 'lucide-react';
 import { CONTACT_INFO } from '@/config/contact';
+import { SITE_CONFIG } from '@/config/site';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -46,19 +48,24 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-4 text-foreground">Quick Links</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="/" className="hover:text-foreground transition-colors">
+                <Link to="/" className="hover:text-foreground transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="hover:text-foreground transition-colors">
+                <Link to="/gallery" className="hover:text-foreground transition-colors">
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-foreground transition-colors">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/inquiry" className="hover:text-foreground transition-colors">
+                <Link to="/inquiry" className="hover:text-foreground transition-colors">
                   Product Inquiry
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

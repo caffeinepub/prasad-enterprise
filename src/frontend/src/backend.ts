@@ -89,10 +89,351 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface backendInterface {
+export interface BlogAuthor {
+    bio: string;
+    adminPrincipal: Principal;
+    name: string;
 }
+export interface UserProfile {
+    bio: string;
+    name: string;
+}
+export interface Post {
+    categories: Array<string>;
+    title: string;
+    content: string;
+    tags: Array<string>;
+    blogPostId: bigint;
+    author: string;
+}
+export enum UserRole {
+    admin = "admin",
+    user = "user",
+    guest = "guest"
+}
+export interface backendInterface {
+    _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
+    assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
+    createBlogAuthor(adminPrincipal: Principal, name: string, bio: string): Promise<void>;
+    createBlogPost(title: string, content: string, author: string, tags: Array<string>, categories: Array<string>): Promise<bigint>;
+    deleteBlogAuthor(adminPrincipal: Principal): Promise<void>;
+    deleteBlogPost(postId: bigint): Promise<void>;
+    getAllBlogAuthors(): Promise<Array<BlogAuthor>>;
+    getAllBlogPosts(): Promise<Array<Post>>;
+    getBlogPostsByBlogAuthor(author: string): Promise<Array<Post>>;
+    getBlogPostsByCategory(category: string): Promise<Array<Post>>;
+    getBlogPostsByTag(tag: string): Promise<Array<Post>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
+    getCallerUserRole(): Promise<UserRole>;
+    getNextPostId(): Promise<bigint>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    isCallerAdmin(): Promise<boolean>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    updateBlogAuthor(adminPrincipal: Principal, name: string, bio: string): Promise<void>;
+    updateBlogPost(postId: bigint, title: string, content: string, author: string, tags: Array<string>, categories: Array<string>): Promise<void>;
+}
+import type { UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
+    async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor._initializeAccessControlWithSecret(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor._initializeAccessControlWithSecret(arg0);
+            return result;
+        }
+    }
+    async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n1(this._uploadFile, this._downloadFile, arg1));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n1(this._uploadFile, this._downloadFile, arg1));
+            return result;
+        }
+    }
+    async createBlogAuthor(arg0: Principal, arg1: string, arg2: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.createBlogAuthor(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.createBlogAuthor(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async createBlogPost(arg0: string, arg1: string, arg2: string, arg3: Array<string>, arg4: Array<string>): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.createBlogPost(arg0, arg1, arg2, arg3, arg4);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.createBlogPost(arg0, arg1, arg2, arg3, arg4);
+            return result;
+        }
+    }
+    async deleteBlogAuthor(arg0: Principal): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteBlogAuthor(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteBlogAuthor(arg0);
+            return result;
+        }
+    }
+    async deleteBlogPost(arg0: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteBlogPost(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteBlogPost(arg0);
+            return result;
+        }
+    }
+    async getAllBlogAuthors(): Promise<Array<BlogAuthor>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllBlogAuthors();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllBlogAuthors();
+            return result;
+        }
+    }
+    async getAllBlogPosts(): Promise<Array<Post>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllBlogPosts();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllBlogPosts();
+            return result;
+        }
+    }
+    async getBlogPostsByBlogAuthor(arg0: string): Promise<Array<Post>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getBlogPostsByBlogAuthor(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getBlogPostsByBlogAuthor(arg0);
+            return result;
+        }
+    }
+    async getBlogPostsByCategory(arg0: string): Promise<Array<Post>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getBlogPostsByCategory(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getBlogPostsByCategory(arg0);
+            return result;
+        }
+    }
+    async getBlogPostsByTag(arg0: string): Promise<Array<Post>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getBlogPostsByTag(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getBlogPostsByTag(arg0);
+            return result;
+        }
+    }
+    async getCallerUserProfile(): Promise<UserProfile | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserProfile();
+                return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserProfile();
+            return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getCallerUserRole(): Promise<UserRole> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserRole();
+                return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserRole();
+            return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getNextPostId(): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getNextPostId();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getNextPostId();
+            return result;
+        }
+    }
+    async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getUserProfile(arg0);
+                return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getUserProfile(arg0);
+            return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async isCallerAdmin(): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.isCallerAdmin();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.isCallerAdmin();
+            return result;
+        }
+    }
+    async saveCallerUserProfile(arg0: UserProfile): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.saveCallerUserProfile(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+    async updateBlogAuthor(arg0: Principal, arg1: string, arg2: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateBlogAuthor(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateBlogAuthor(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async updateBlogPost(arg0: bigint, arg1: string, arg2: string, arg3: string, arg4: Array<string>, arg5: Array<string>): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateBlogPost(arg0, arg1, arg2, arg3, arg4, arg5);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateBlogPost(arg0, arg1, arg2, arg3, arg4, arg5);
+            return result;
+        }
+    }
+}
+function from_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n5(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    admin: null;
+} | {
+    user: null;
+} | {
+    guest: null;
+}): UserRole {
+    return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
+}
+function to_candid_UserRole_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
+    return to_candid_variant_n2(_uploadFile, _downloadFile, value);
+}
+function to_candid_variant_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
+    admin: null;
+} | {
+    user: null;
+} | {
+    guest: null;
+} {
+    return value == UserRole.admin ? {
+        admin: null
+    } : value == UserRole.user ? {
+        user: null
+    } : value == UserRole.guest ? {
+        guest: null
+    } : value;
 }
 export interface CreateActorOptions {
     agent?: Agent;

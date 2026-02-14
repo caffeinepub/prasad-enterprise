@@ -1,33 +1,102 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T22:51:53.346Z",
-  "summary": "REQ-31 is partially implemented: SITE_CONFIG.url was updated to the requested primary URL, but the diff summary does not provide evidence that all draft URL and www-variant references were removed project-wide from user-facing UI copy/links/metadata.",
+  "generatedAt": "2026-02-13T23:53:32.471Z",
+  "summary": "Diff adds a basic blog UI (public list/detail pages with category/tag filtering, inline image blocks) and an admin section gated by an isCallerAdmin() check. However, several core spec items are missing: backend persistence in stable storage and required post fields (slug/excerpt/timestamps/published), published-only public reads, and the requested Internet Identity allowlist-based admin mechanism. The diff also modifies an explicitly immutable hook (useActor.ts) and introduces a secret-token access-control initialization scheme not requested.",
   "missing_requirements": [
     {
-      "id": "REQ-31",
-      "requirement": "Ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" anywhere in frontend source code or user-facing text (project-wide).",
-      "reason": "The diff summary shows only a change to `frontend/src/config/site.ts` and does not show any removals/updates in other files that would eliminate existing draft-URL occurrences. With the provided evidence, compliance with the project-wide 'no occurrences' acceptance criterion cannot be verified.",
+      "id": "REQ-38",
+      "requirement": "Backend blog post persistence must include full CRUD plus fields id, title, slug, excerpt/summary, content (incl. images), categories, tags, createdAt, updatedAt, and published flag/date, stored in stable memory across upgrades; unauth users can read published posts only; writes restricted to authenticated admins.",
+      "reason": "backend/main.mo defines Post with only blogPostId/title/content/author/tags/categories and implements CRUD, but no slug, excerpt/summary, createdAt/updatedAt, published flag/date, nor evidence of stable storage (no stable vars / preupgrade/postupgrade handling shown). Public queries return all posts without filtering to published.",
       "evidence": [
-        "frontend/src/config/site.ts",
-        "frontend-file-summaries.txt (truncated)"
+        "backend/main.mo"
       ]
     },
     {
-      "id": "REQ-31",
-      "requirement": "Ensure the application does not display or reference the \"https://www.prasadenterprise.caffeine.xyz\" variant as the primary site URL anywhere in frontend source code or user-facing text (project-wide).",
-      "reason": "Only `SITE_CONFIG.url` is shown as updated; there is no evidence in the diff summary of updates/removals across the rest of the frontend to eliminate any existing `https://www.prasadenterprise.caffeine.xyz` occurrences. The acceptance criterion requires project-wide absence, which cannot be confirmed from the diff summary.",
+      "id": "REQ-39",
+      "requirement": "Admin authorization mechanism must use Internet Identity and gate write operations by checking caller principal against a configured in-code allowlist of admin principals; return clear errors like \"Not authorized\".",
+      "reason": "backend/main.mo uses AccessControl.isAdmin with an accessControlState plus a secret-token initialization flow on the frontend (actor._initializeAccessControlWithSecret). No evidence of an in-code principal allowlist, and unauthorized errors are traps like \"Unauthorized: Only admins can perform this action\" rather than the specified example. Also the mechanism appears to rely on a secret token rather than directly comparing caller principal to an allowlist.",
       "evidence": [
-        "frontend/src/config/site.ts",
-        "frontend-file-summaries.txt (truncated)"
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "requirement": "Public Blog list must show published posts in reverse chronological order with title, excerpt/summary, date, categories, tags; and Blog detail must render full content with images inline.",
+      "reason": "Frontend implements blog routes and inline image rendering, and filtering by category/tag exists. However, posts are sorted by blogPostId (not by created/published date), there is no excerpt/summary or date displayed (and backend provides none), and there is no published-only filtering (backend returns all posts and UI filters none).",
+      "evidence": [
+        "frontend/src/pages/BlogListPage.tsx",
+        "frontend/src/pages/BlogPostPage.tsx",
+        "frontend/src/hooks/useBlog.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "requirement": "Admin UI must allow authenticated admins to create/edit/publish-unpublish/delete posts including title, slug, excerpt/summary, categories, tags, published state, and content with image blocks (src+alt, optional caption).",
+      "reason": "Admin pages exist and support create/edit/delete and a block editor with image src/alt/caption. But the admin forms shown include title/author/content/categories/tags only; there is no slug, excerpt/summary, or published state controls. Backend mutations also accept only title/content/author/tags/categories (no slug/published/etc.).",
+      "evidence": [
+        "frontend/src/pages/BlogAdminEditPage.tsx",
+        "frontend/src/hooks/useBlogAdmin.ts",
+        "backend/main.mo",
+        "frontend/src/components/blog/BlogPostEditor.tsx"
       ]
     }
   ],
-  "hallucinated_features": [],
-  "confidence": 0.62,
+  "hallucinated_features": [
+    {
+      "description": "Introduces a secret-token based access-control initialization via URL parameter (caffeineAdminToken) and actor._initializeAccessControlWithSecret, instead of the requested II principal allowlist gating.",
+      "reason": "BuildRequest specifies admin allowlist in code and Internet Identity principal checks; diff adds a separate secret-token mechanism and URL/session parameter utilities for it.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/utils/urlParams.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Adds user profile and blog author data structures and related backend APIs unrelated to the blog system requirements.",
+      "reason": "BuildRequest does not request user profiles or blog-author management features.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Adds backend/migration.mo and references migration run without clear requirement-driven stable blog storage implementation.",
+      "reason": "BuildRequest only requires stable persistence for blog posts; the added migration file shown is a no-op and does not demonstrate the required stable storage implementation.",
+      "evidence": [
+        "backend/migration.mo",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Modifies an explicitly immutable hook file (frontend/src/hooks/useActor.ts), violating stated constraints.",
+      "reason": "Constraints prohibit modifying frontend/src/hooks/useActor.ts, but diff shows it was modified to add access-control initialization and URL secret handling.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    }
+  ],
+  "confidence": 0.78,
   "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/config/site.ts",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AdminGate.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/blog/BlogPostContentRenderer.tsx",
+    "frontend/src/components/blog/BlogPostEditor.tsx",
+    "frontend/src/components/site/Footer.tsx",
+    "frontend/src/components/site/Header.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useBlog.ts",
+    "frontend/src/hooks/useBlogAdmin.ts",
+    "frontend/src/pages/BlogAdminEditPage.tsx",
+    "frontend/src/pages/BlogAdminPage.tsx",
+    "frontend/src/pages/BlogListPage.tsx",
+    "frontend/src/pages/BlogPostPage.tsx",
+    "frontend/src/utils/urlParams.ts",
     "project_state.json"
   ]
 }

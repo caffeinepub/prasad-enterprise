@@ -8,10 +8,134 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const BlogAuthor = IDL.Record({
+  'bio' : IDL.Text,
+  'adminPrincipal' : IDL.Principal,
+  'name' : IDL.Text,
+});
+export const Post = IDL.Record({
+  'categories' : IDL.Vec(IDL.Text),
+  'title' : IDL.Text,
+  'content' : IDL.Text,
+  'tags' : IDL.Vec(IDL.Text),
+  'blogPostId' : IDL.Nat,
+  'author' : IDL.Text,
+});
+export const UserProfile = IDL.Record({ 'bio' : IDL.Text, 'name' : IDL.Text });
+
+export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'createBlogAuthor' : IDL.Func([IDL.Principal, IDL.Text, IDL.Text], [], []),
+  'createBlogPost' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Vec(IDL.Text), IDL.Vec(IDL.Text)],
+      [IDL.Nat],
+      [],
+    ),
+  'deleteBlogAuthor' : IDL.Func([IDL.Principal], [], []),
+  'deleteBlogPost' : IDL.Func([IDL.Nat], [], []),
+  'getAllBlogAuthors' : IDL.Func([], [IDL.Vec(BlogAuthor)], ['query']),
+  'getAllBlogPosts' : IDL.Func([], [IDL.Vec(Post)], ['query']),
+  'getBlogPostsByBlogAuthor' : IDL.Func([IDL.Text], [IDL.Vec(Post)], ['query']),
+  'getBlogPostsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Post)], ['query']),
+  'getBlogPostsByTag' : IDL.Func([IDL.Text], [IDL.Vec(Post)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getNextPostId' : IDL.Func([], [IDL.Nat], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'updateBlogAuthor' : IDL.Func([IDL.Principal, IDL.Text, IDL.Text], [], []),
+  'updateBlogPost' : IDL.Func(
+      [
+        IDL.Nat,
+        IDL.Text,
+        IDL.Text,
+        IDL.Text,
+        IDL.Vec(IDL.Text),
+        IDL.Vec(IDL.Text),
+      ],
+      [],
+      [],
+    ),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const BlogAuthor = IDL.Record({
+    'bio' : IDL.Text,
+    'adminPrincipal' : IDL.Principal,
+    'name' : IDL.Text,
+  });
+  const Post = IDL.Record({
+    'categories' : IDL.Vec(IDL.Text),
+    'title' : IDL.Text,
+    'content' : IDL.Text,
+    'tags' : IDL.Vec(IDL.Text),
+    'blogPostId' : IDL.Nat,
+    'author' : IDL.Text,
+  });
+  const UserProfile = IDL.Record({ 'bio' : IDL.Text, 'name' : IDL.Text });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'createBlogAuthor' : IDL.Func([IDL.Principal, IDL.Text, IDL.Text], [], []),
+    'createBlogPost' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Vec(IDL.Text), IDL.Vec(IDL.Text)],
+        [IDL.Nat],
+        [],
+      ),
+    'deleteBlogAuthor' : IDL.Func([IDL.Principal], [], []),
+    'deleteBlogPost' : IDL.Func([IDL.Nat], [], []),
+    'getAllBlogAuthors' : IDL.Func([], [IDL.Vec(BlogAuthor)], ['query']),
+    'getAllBlogPosts' : IDL.Func([], [IDL.Vec(Post)], ['query']),
+    'getBlogPostsByBlogAuthor' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(Post)],
+        ['query'],
+      ),
+    'getBlogPostsByCategory' : IDL.Func([IDL.Text], [IDL.Vec(Post)], ['query']),
+    'getBlogPostsByTag' : IDL.Func([IDL.Text], [IDL.Vec(Post)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getNextPostId' : IDL.Func([], [IDL.Nat], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'updateBlogAuthor' : IDL.Func([IDL.Principal, IDL.Text, IDL.Text], [], []),
+    'updateBlogPost' : IDL.Func(
+        [
+          IDL.Nat,
+          IDL.Text,
+          IDL.Text,
+          IDL.Text,
+          IDL.Vec(IDL.Text),
+          IDL.Vec(IDL.Text),
+        ],
+        [],
+        [],
+      ),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };

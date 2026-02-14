@@ -10,7 +10,50 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface _SERVICE {}
+export interface BlogAuthor {
+  'bio' : string,
+  'adminPrincipal' : Principal,
+  'name' : string,
+}
+export interface Post {
+  'categories' : Array<string>,
+  'title' : string,
+  'content' : string,
+  'tags' : Array<string>,
+  'blogPostId' : bigint,
+  'author' : string,
+}
+export interface UserProfile { 'bio' : string, 'name' : string }
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
+export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'createBlogAuthor' : ActorMethod<[Principal, string, string], undefined>,
+  'createBlogPost' : ActorMethod<
+    [string, string, string, Array<string>, Array<string>],
+    bigint
+  >,
+  'deleteBlogAuthor' : ActorMethod<[Principal], undefined>,
+  'deleteBlogPost' : ActorMethod<[bigint], undefined>,
+  'getAllBlogAuthors' : ActorMethod<[], Array<BlogAuthor>>,
+  'getAllBlogPosts' : ActorMethod<[], Array<Post>>,
+  'getBlogPostsByBlogAuthor' : ActorMethod<[string], Array<Post>>,
+  'getBlogPostsByCategory' : ActorMethod<[string], Array<Post>>,
+  'getBlogPostsByTag' : ActorMethod<[string], Array<Post>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getNextPostId' : ActorMethod<[], bigint>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'updateBlogAuthor' : ActorMethod<[Principal, string, string], undefined>,
+  'updateBlogPost' : ActorMethod<
+    [bigint, string, string, string, Array<string>, Array<string>],
+    undefined
+  >,
+}
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
 export declare const idlFactory: IDL.InterfaceFactory;

@@ -1,36 +1,115 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T22:51:53.348Z",
+  "generatedAt": "2026-02-13T23:53:32.475Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 1,
-    "implemented": 1,
+    "total": 5,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-31",
-        "summary": "Update the app’s primary site URL configuration to use exactly \"https://prasadenterprise.caffeine.xyz/\" (no \"www\") and ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" or the \"https://www.prasadenterprise.caffeine.xyz\" variant anywhere in user-facing UI copy, links intended to represent the site’s primary URL, or metadata derived from SITE_CONFIG.",
+        "id": "REQ-38",
+        "summary": "Implement backend persistence for blog posts in the Motoko single-actor canister, including CRUD operations, category/tag fields, and stable storage so posts remain available after upgrades.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-39",
+        "summary": "Add an admin authorization mechanism using Internet Identity: gate all blog write operations in the backend by checking the caller principal against a configured allowlist of admin principals.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-40",
+        "summary": "Create a public Blog section in the frontend, including: (1) a blog list page that shows published posts and supports filtering by category/tag, and (2) a blog post detail page for reading a single post with embedded images rendered inline within the post content.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/config/site.ts",
-          "frontend/src/components/site/Footer.tsx",
-          "frontend/index.html"
+          "frontend/src/pages/BlogListPage.tsx",
+          "frontend/src/pages/BlogPostPage.tsx",
+          "frontend/src/components/blog/BlogPostContentRenderer.tsx",
+          "frontend/src/hooks/useBlog.ts",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/config/site.ts"
+          "frontend/src/pages/BlogListPage.tsx",
+          "frontend/src/pages/BlogPostPage.tsx",
+          "frontend/src/components/blog/BlogPostContentRenderer.tsx",
+          "frontend/src/hooks/useBlog.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-41",
+        "summary": "Create a simple in-site Blog Admin UI for authenticated admins to create, edit, publish/unpublish, and delete blog posts, including a content editor that supports adding images inside the post.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/BlogAdminPage.tsx",
+          "frontend/src/pages/BlogAdminEditPage.tsx",
+          "frontend/src/components/blog/BlogPostEditor.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/components/auth/AdminGate.tsx",
+          "frontend/src/hooks/useBlogAdmin.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/BlogAdminPage.tsx",
+          "frontend/src/pages/BlogAdminEditPage.tsx",
+          "frontend/src/components/blog/BlogPostEditor.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/components/auth/AdminGate.tsx",
+          "frontend/src/hooks/useBlogAdmin.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-42",
+        "summary": "Add Blog navigation entry points from the site header and footer so users can reach the Blog from any page.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/site/Header.tsx",
+          "frontend/src/components/site/Footer.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/site/Header.tsx",
+          "frontend/src/components/site/Footer.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/config/site.ts",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/auth/AdminGate.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/blog/BlogPostContentRenderer.tsx",
+    "frontend/src/components/blog/BlogPostEditor.tsx",
+    "frontend/src/components/site/Footer.tsx",
+    "frontend/src/components/site/Header.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useBlog.ts",
+    "frontend/src/hooks/useBlogAdmin.ts",
+    "frontend/src/pages/BlogAdminEditPage.tsx",
+    "frontend/src/pages/BlogAdminPage.tsx",
+    "frontend/src/pages/BlogListPage.tsx",
+    "frontend/src/pages/BlogPostPage.tsx",
+    "frontend/src/utils/urlParams.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { Home, Phone, Mail, Image } from 'lucide-react';
+import { Home, Phone, Mail, Image, BookOpen } from 'lucide-react';
 import InquirySummaryButton from '../inquiry/InquirySummaryButton';
 import { CONTACT_INFO } from '@/config/contact';
 
@@ -61,6 +61,14 @@ export default function Header() {
             >
               <Image className="mr-2 h-4 w-4" />
               Gallery
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate({ to: '/blog' })}
+              className="text-base"
+            >
+              <BookOpen className="mr-2 h-4 w-4" />
+              Blog
             </Button>
             <Button
               variant="ghost"

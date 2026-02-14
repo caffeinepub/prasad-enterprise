@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 17,
-  "summary": "Build a modern, high-performance lead-generation website for Prasad Enterprise (hardware/building materials) featuring categorized products, 3D/interactive UI effects, and a product inquiry flow that collects selected items and submits a validated lead form. Email sending has been canceled; inquiry submissions will be handled via local storage instead. Add a dedicated, category-wise Gallery page with filters and 3D/hover effects; gallery items use manually provided images with auto-generated product names and categories, and include a small disclaimer “(this is a sample image)”. Remove “TATA steel” branding wherever it appears. Preserve the site URL as https://prasadenterprise.caffeine.xyz. The Home page background should use the older blueprint/industrial interactive background (no fullscreen fixed stock video).",
+  "projectStateVersion": 23,
+  "summary": "Build a modern, high-performance lead-generation website for Prasad Enterprise (hardware/building materials) featuring categorized products, 3D/interactive UI effects, and a product inquiry flow that collects selected items and submits a validated lead form. Email sending has been canceled; inquiry submissions will be handled via local storage instead. Add a dedicated, category-wise Gallery page with filters and 3D/hover effects; gallery items use manually provided images with auto-generated product names and categories, and include a small disclaimer “(this is a sample image)”. Remove “TATA steel” branding wherever it appears. Preserve the site URL as https://prasadenterprise.caffeine.xyz. Replace the current blueprint/industrial interactive background with a site-wide 3D floating hardware-items interactive background. Add a Blog system to improve SEO with an in-site admin UI to create/edit posts, support images inside posts, and support categories/tags.",
   "architectural_notes": [
     "Email integration removed per user; inquiry submissions must be handled via local storage instead of sending formatted emails.",
     "Google Maps: include embedded iframe for location display plus a separate external 'Get Directions' link that opens Google Maps on web/app.",
@@ -10,8 +10,9 @@
     "Add a dedicated Gallery page with category-wise browsing, filters, and 3D/hover effects, using images added manually as static assets (no user upload UI).",
     "Gallery item product names and categories should be auto-generated using both detected text and object/material recognition; allow user to request corrections if needed.",
     "Append “(this is a sample image)” as a small-font disclaimer alongside each gallery product name.",
-    "Home page: revert background to the older blueprint/industrial InteractiveBackground (remove the fullscreen fixed brick-kiln stock video behavior on Home only).",
-    "Preserve the public site URL name as https://prasadenterprise.caffeine.xyz (no www)."
+    "Preserve the public site URL name as https://prasadenterprise.caffeine.xyz (no www).",
+    "Interactive background direction updated: replace the existing blueprint/industrial InteractiveBackground with a new site-wide 3D floating hardware-items variation (not an additional selectable style).",
+    "Blog: add an in-site admin UI for creating/editing posts; posts must support embedded images and categories/tags for SEO/content organization."
   ],
   "known_issues": [
     "Site is currently not using the exact user-provided logo; must re-implement logo correctly."
@@ -265,18 +266,84 @@
         "REQ-31"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-create-an-additional-site-wide-interactive-background-variation-featuring-floating-3d-styled-hardware-items-e-g-nuts-bolts-screws-washers-that-subtly-reacts-to-cursor-movement-preserve-the-existing-blueprint-particle-interactive-background-implementation",
+      "title": "Create an additional site-wide interactive background variation featuring floating 3D-styled hardware items (e.g., nuts, bolts, screws, washers) that subtly reacts to cursor movement. Preserve the existing blueprint/particle interactive background implementation.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-site-wide-mechanism-to-use-the-new-3d-floating-hardware-background-as-an-additional-variation-not-a-replacement-with-deterministic-selection-behavior-e-g-randomly-chosen-on-initial-load-and-kept-stable-for-the-session-or-a-simple-config-flag",
+      "title": "Add a site-wide mechanism to use the new 3D floating hardware background as an additional variation (not a replacement), with deterministic selection behavior (e.g., randomly chosen on initial load and kept stable for the session, or a simple config flag).",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-new-site-wide-3d-floating-hardware-background-variation-is-performant-and-non-intrusive-maintain-correct-layering-behind-all-ui-avoid-capturing-pointer-events-and-respect-reduced-motion-preferences",
+      "title": "Ensure the new site-wide 3D floating hardware background variation is performant and non-intrusive: maintain correct layering (behind all UI), avoid capturing pointer events, and respect reduced-motion preferences.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-blueprint-industrial-canvas-background-implementation-with-a-new-site-wide-interactive-background-featuring-floating-3d-styled-hardware-parts-e-g-nuts-bolts-screws-washers-the-new-background-must-replace-not-coexist-with-the-current-blueprint-tiled-image-particle-network-effect-in-frontend-src-components-site-interactivebackground-tsx-while-keeping-the-component-name-and-its-usage-in-frontend-src-components-site-sitelayout-tsx-intact-so-it-remains-active-on-all-routes",
+      "title": "Replace the existing blueprint/industrial canvas background implementation with a new site-wide interactive background featuring floating 3D-styled hardware parts (e.g., nuts, bolts, screws, washers). The new background must replace (not coexist with) the current blueprint tiled image + particle network effect in `frontend/src/components/site/InteractiveBackground.tsx`, while keeping the component name and its usage in `frontend/src/components/site/SiteLayout.tsx` intact so it remains active on all routes.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-subtle-parallax-interaction-for-the-floating-hardware-parts-based-on-cursor-movement-and-a-safe-fallback-behavior-for-touch-devices-ensuring-the-effect-is-decorative-and-does-not-reduce-readability-of-foreground-content",
+      "title": "Implement subtle parallax interaction for the floating hardware parts based on cursor movement (and a safe fallback behavior for touch devices), ensuring the effect is decorative and does not reduce readability of foreground content.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-maintain-correct-layering-and-non-intrusive-behavior-for-the-new-background-it-must-stay-behind-all-ui-must-not-capture-pointer-events-and-must-be-performant-respect-reduced-motion-preferences-by-disabling-or-significantly-simplifying-animations-when-the-user-has-prefers-reduced-motion-reduce",
+      "title": "Maintain correct layering and non-intrusive behavior for the new background: it must stay behind all UI, must not capture pointer events, and must be performant. Respect reduced-motion preferences by disabling or significantly simplifying animations when the user has `prefers-reduced-motion: reduce`.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-public-blog-section-in-the-frontend-including-1-a-blog-list-page-that-shows-published-posts-and-supports-filtering-by-category-tag-and-2-a-blog-post-detail-page-for-reading-a-single-post-with-embedded-images-rendered-inline-within-the-post-content",
+      "title": "Create a public Blog section in the frontend, including: (1) a blog list page that shows published posts and supports filtering by category/tag, and (2) a blog post detail page for reading a single post with embedded images rendered inline within the post content.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-simple-in-site-blog-admin-ui-for-authenticated-admins-to-create-edit-publish-unpublish-and-delete-blog-posts-including-a-content-editor-that-supports-adding-images-inside-the-post",
+      "title": "Create a simple in-site Blog Admin UI for authenticated admins to create, edit, publish/unpublish, and delete blog posts, including a content editor that supports adding images inside the post.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-blog-navigation-entry-points-from-the-site-header-and-footer-so-users-can-reach-the-blog-from-any-page",
+      "title": "Add Blog navigation entry points from the site header and footer so users can reach the Blog from any page.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
     {
       "id": "AR-1",
       "summary": "Implement industrial-chic visual design (slate grey + deep orange/gold + white), premium transitions, 3D text effects for headings, and 3D hover/tilt interactions on product cards/titles",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Add interactive dynamic hardware/blueprint-themed background that reacts to cursor movement",
       "reqIds": [],
       "status": "pending"
     },
@@ -368,6 +435,34 @@
       "id": "AR-17",
       "summary": "Set/preserve the primary public site URL as https://prasadenterprise.caffeine.xyz (no draft URL; no www) by pushing the current draft live",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Replace the existing blueprint/industrial InteractiveBackground with a site-wide 3D floating hardware-items interactive background (floating 3D parts)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add a Blog system for SEO: create a Blog page plus a simple in-site admin UI to create/edit posts, support images inside posts, and support categories/tags",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Implement backend persistence for blog posts in the Motoko single-actor canister, including CRUD operations, category/tag fields, and stable storage so posts remain available after upgrades.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add an admin authorization mechanism using Internet Identity: gate all blog write operations in the backend by checking the caller principal against a configured allowlist of admin principals.",
+      "reqIds": [
+        "REQ-39"
+      ],
       "status": "pending"
     }
   ],

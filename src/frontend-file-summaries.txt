@@ -1,9 +1,9 @@
 {
-  "frontend/src/App.tsx": "Main application component with TanStack Router setup including all routes (home, categories, inquiry flow, contact, and new gallery route) wrapped with ThemeProvider and Toaster.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup including all routes (home, categories, inquiry flow, contact, gallery, blog public pages, and blog admin pages) wrapped with ThemeProvider and Toaster.",
   "frontend/src/components/site/SiteLayout.tsx": "Root layout component that renders the interactive background canvas, header, main content area with page transitions, and footer for all routes without any conditional video background.",
-  "frontend/src/components/site/Header.tsx": "Sticky header component with logo, contact info bar (desktop), navigation buttons including new Gallery link, and inquiry summary button with item count badge.",
-  "frontend/src/components/site/Footer.tsx": "Footer component with company info, contact details, quick links (including Gallery), social media icons, copyright notice, and attribution link using router Link components for internal navigation.",
-  "frontend/src/components/site/InteractiveBackground.tsx": "Canvas-based animated background with adjusted z-index (z-[-1]) to sit above the video layer while remaining non-interactive and behind main content.",
+  "frontend/src/components/site/Header.tsx": "Sticky header component with logo, contact info bar (desktop), navigation buttons including new Blog link, and inquiry summary button with item count badge.",
+  "frontend/src/components/site/Footer.tsx": "Footer component with company info, contact details, quick links (including Blog), social media icons, copyright notice, and attribution link using router Link components for internal navigation.",
+  "frontend/src/components/site/InteractiveBackground.tsx": "Canvas-based animated background rendering floating 3D-styled hardware parts (bolts, nuts, screws, washers) with subtle cursor-based parallax, touch fallback, reduced-motion support, and theme-aware shading for readability in both light and dark modes.",
   "frontend/src/components/site/PageTransition.tsx": "Simple wrapper component that applies fade-in animation to page content during route transitions.",
   "frontend/src/components/inquiry/InquirySummaryButton.tsx": "Button component that displays the inquiry list icon with a badge showing total item count and navigates to the inquiry page when clicked.",
   "frontend/src/pages/HomePage.tsx": "Homepage featuring a hero section with the company slogan and a grid of clickable 3D-styled category cards that navigate to their respective category pages.",
@@ -26,5 +26,15 @@
   "frontend/src/utils/galleryInference.ts": "Local deterministic inference utilities that auto-generate product names and categories from image filenames using keyword matching and token parsing, with fallback to \"Other\" category for low-confidence cases.",
   "frontend/src/data/gallery.ts": "Static gallery data module that references existing generated images from public assets and applies auto-inference to generate names and categories for each gallery item.",
   "frontend/src/pages/GalleryPage.tsx": "Gallery page component with category filtering, responsive grid layout, 3D hover card effects, and disclaimer text \"(this is a sample image)\" displayed in small font below each product name.",
-  "frontend/src/components/site/HomeBackgroundVideo.tsx": "Fullscreen fixed background video component with autoplay, loop, muted attributes, robust error handling with gradient fallback, and a subtle overlay for content readability; uses z-[-2] to sit behind the interactive canvas."
+  "frontend/src/components/site/HomeBackgroundVideo.tsx": "Fullscreen fixed background video component with autoplay, loop, muted attributes, robust error handling with gradient fallback, and a subtle overlay for content readability; uses z-[-2] to sit behind the interactive canvas.",
+  "frontend/src/hooks/useBlog.ts": "React Query hooks for blog read operations (list all posts, filter by category/tag, and derive unique categories/tags from posts) using the backend actor.",
+  "frontend/src/hooks/useBlogAdmin.ts": "React Query mutation hooks for blog admin write operations (create, update, delete posts, and check admin status) with toast notifications and cache invalidation.",
+  "frontend/src/components/auth/LoginButton.tsx": "Reusable Login/Logout button using Internet Identity hook with loading states and query cache clearing on logout.",
+  "frontend/src/components/auth/AdminGate.tsx": "Guard component that checks authentication and admin status, showing access denied message or login prompt for non-admin users.",
+  "frontend/src/components/blog/BlogPostContentRenderer.tsx": "Renderer component that converts structured JSON content (text and image blocks) into React elements with safe rendering and graceful fallback for plain text.",
+  "frontend/src/components/blog/BlogPostEditor.tsx": "Lightweight structured content editor supporting text and image blocks with add/remove/reorder controls and live preview for images.",
+  "frontend/src/pages/BlogListPage.tsx": "Public blog list page with post cards, category/tag filtering, search functionality, and responsive sidebar layout using shadcn-ui components.",
+  "frontend/src/pages/BlogPostPage.tsx": "Public blog post detail page displaying full post content with inline images, categories, tags, and back navigation.",
+  "frontend/src/pages/BlogAdminPage.tsx": "Admin-only blog management page with post list table, create/edit/delete actions using proper TanStack Router navigation with params, and authentication gate using Internet Identity.",
+  "frontend/src/pages/BlogAdminEditPage.tsx": "Admin-only blog post editor page with form fields for title, author, categories, tags, and structured content editor for creating/updating posts."
 }

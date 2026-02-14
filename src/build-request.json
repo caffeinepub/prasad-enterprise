@@ -1,52 +1,117 @@
 {
   "kind": "build_request",
-  "title": "Set primary site URL to prasadenterprise.caffeine.xyz (no www) and remove draft URL references",
+  "title": "Add Blog system with admin UI, in-post images, and categories/tags",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-31",
-      "text": "Update the app’s primary site URL configuration to use exactly \"https://prasadenterprise.caffeine.xyz/\" (no \"www\") and ensure the application does not display or reference the draft URL \"https://significant-blush-1gq-draft.caffeine.xyz/\" or the \"https://www.prasadenterprise.caffeine.xyz\" variant anywhere in user-facing UI copy, links intended to represent the site’s primary URL, or metadata derived from SITE_CONFIG.",
-      "target": "frontend",
+      "id": "REQ-38",
+      "text": "Implement backend persistence for blog posts in the Motoko single-actor canister, including CRUD operations, category/tag fields, and stable storage so posts remain available after upgrades.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-5",
-          "msg-6",
-          "msg-7"
+          "msg-1"
         ],
         "quotes": [
-          "change the URL from this \"https://significant-blush-1gq-draft.caffeine.xyz/\" to this \"https://prasadenterprise.caffeine.xyz/\"  build",
-          "Your site is already configured to use the URL:\nhttps://www.prasadenterprise.caffeine.xyz\n\n...Do you want me to push the current draft live so the main URL becomes prasadenterprise.caffeine.xyz?",
-          "yes"
+          "1 - simple admin UI\n2 - blog should support the images inside the post\n3 - I need categories/tag for blog posts"
         ]
       },
       "acceptanceCriteria": [
-        "frontend/src/config/site.ts sets SITE_CONFIG.url to exactly \"https://prasadenterprise.caffeine.xyz\" (no www).",
-        "A project-wide search finds no occurrences of \"significant-blush-1gq-draft.caffeine.xyz\" in frontend source code or user-facing text.",
-        "A project-wide search finds no occurrences of \"https://www.prasadenterprise.caffeine.xyz\" used as the primary site URL in frontend source code or user-facing text.",
-        "Any UI element or link that intentionally represents the site’s primary URL (if present) uses \"https://prasadenterprise.caffeine.xyz\"."
+        "Backend exposes methods to create/update, delete, list, and fetch blog posts (at minimum by slug or id).",
+        "Each blog post includes: id, title, slug, excerpt/summary, content (including images), categories, tags, createdAt, updatedAt, and published flag/date.",
+        "Blog post data is stored in stable memory so it persists across canister upgrades.",
+        "Unauthenticated users can read published posts; create/update/delete operations are restricted to authenticated admin principals."
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "text": "Add an admin authorization mechanism using Internet Identity: gate all blog write operations in the backend by checking the caller principal against a configured allowlist of admin principals.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "1 - simple admin UI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend rejects create/update/delete requests from anonymous users and from authenticated non-admin principals.",
+        "Backend returns clear errors for unauthorized access (e.g., \"Not authorized\").",
+        "Admin allowlist is configurable in code (no external services)."
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "text": "Create a public Blog section in the frontend, including: (1) a blog list page that shows published posts and supports filtering by category/tag, and (2) a blog post detail page for reading a single post with embedded images rendered inline within the post content.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "2 - blog should support the images inside the post\n3 - I need categories/tag for blog posts"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A new Blog route exists and is reachable via site navigation.",
+        "Blog list displays published posts in reverse chronological order and shows each post’s title, excerpt/summary, date, categories, and tags.",
+        "Users can filter the blog list by category and/or tag.",
+        "Blog detail page renders the full post content and displays images inline where defined in the post content structure.",
+        "All user-facing text for the blog UI is in English."
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "text": "Create a simple in-site Blog Admin UI for authenticated admins to create, edit, publish/unpublish, and delete blog posts, including a content editor that supports adding images inside the post.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "1 - simple admin UI\n2 - blog should support the images inside the post"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin UI includes login/logout entry points using existing Internet Identity integration.",
+        "Non-admin users cannot access admin actions (UI hides them and backend blocks them).",
+        "Admin can create and edit a post’s title, slug, excerpt/summary, categories, tags, published state, and content.",
+        "The editor supports embedding images inside the post by allowing admins to add image blocks with at least src URL and alt text (and optionally caption).",
+        "After saving, the post is visible on the public Blog pages when published."
+      ]
+    },
+    {
+      "id": "REQ-42",
+      "text": "Add Blog navigation entry points from the site header and footer so users can reach the Blog from any page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Also add a Blog page where I can create a blog to improve the SEO of the website"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Header includes a \"Blog\" navigation item alongside existing links.",
+        "Footer Quick Links includes a \"Blog\" link.",
+        "Navigation uses TanStack Router internal links (no full page reload)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit any files under frontend/src/components/ui or other paths listed in frontend.immutablePaths.",
-    "Keep the backend as a single Motoko actor (no additional backend services/canisters)."
+    "Backend must remain a single Motoko actor in backend/main.mo; do not introduce additional backend services.",
+    "Do not edit files under frontend/src/components/ui (read-only); compose existing UI components instead.",
+    "Do not modify immutable hook files (frontend/src/hooks/useInternetIdentity.ts, .tsx; frontend/src/hooks/useActor.ts; frontend/src/main.tsx).",
+    "No external databases, third-party auth providers, or external CMS integrations."
   ],
   "nonGoals": [
-    "Implementing DNS changes, SSL, or platform deployment actions (e.g., \"Push Live\") beyond updating the app’s code/configuration.",
-    "Adding new pages or features unrelated to site URL configuration."
+    "Implementing a full WYSIWYG editor with complex formatting (tables, embeds, etc.).",
+    "Implementing in-app image file uploads to the canister (images can be referenced by URL or existing static assets).",
+    "Adding comments, likes, or real-time features for blog posts."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

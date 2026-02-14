@@ -7,6 +7,10 @@ import LeadFormPage from './pages/LeadFormPage';
 import LeadSuccessPage from './pages/LeadSuccessPage';
 import ContactPage from './pages/ContactPage';
 import GalleryPage from './pages/GalleryPage';
+import BlogListPage from './pages/BlogListPage';
+import BlogPostPage from './pages/BlogPostPage';
+import BlogAdminPage from './pages/BlogAdminPage';
+import BlogAdminEditPage from './pages/BlogAdminEditPage';
 import SiteLayout from './components/site/SiteLayout';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -56,6 +60,30 @@ const galleryRoute = createRoute({
   component: GalleryPage,
 });
 
+const blogListRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/blog',
+  component: BlogListPage,
+});
+
+const blogPostRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/blog/$postId',
+  component: BlogPostPage,
+});
+
+const blogAdminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/blog',
+  component: BlogAdminPage,
+});
+
+const blogAdminEditRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/blog/$postId',
+  component: BlogAdminEditPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   categoryRoute,
@@ -64,6 +92,10 @@ const routeTree = rootRoute.addChildren([
   leadSuccessRoute,
   contactRoute,
   galleryRoute,
+  blogListRoute,
+  blogPostRoute,
+  blogAdminRoute,
+  blogAdminEditRoute,
 ]);
 
 const router = createRouter({ routeTree });

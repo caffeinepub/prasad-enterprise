@@ -1,114 +1,70 @@
 {
   "kind": "build_request",
-  "title": "Add Blog system with admin UI, in-post images, and categories/tags",
+  "title": "Switch canonical site URL to prasadenterprise-epm and update all internal domain references",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-38",
-      "text": "Implement backend persistence for blog posts in the Motoko single-actor canister, including CRUD operations, category/tag fields, and stable storage so posts remain available after upgrades.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "1 - simple admin UI\n2 - blog should support the images inside the post\n3 - I need categories/tag for blog posts"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend exposes methods to create/update, delete, list, and fetch blog posts (at minimum by slug or id).",
-        "Each blog post includes: id, title, slug, excerpt/summary, content (including images), categories, tags, createdAt, updatedAt, and published flag/date.",
-        "Blog post data is stored in stable memory so it persists across canister upgrades.",
-        "Unauthenticated users can read published posts; create/update/delete operations are restricted to authenticated admin principals."
-      ]
-    },
-    {
-      "id": "REQ-39",
-      "text": "Add an admin authorization mechanism using Internet Identity: gate all blog write operations in the backend by checking the caller principal against a configured allowlist of admin principals.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "1 - simple admin UI"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend rejects create/update/delete requests from anonymous users and from authenticated non-admin principals.",
-        "Backend returns clear errors for unauthorized access (e.g., \"Not authorized\").",
-        "Admin allowlist is configurable in code (no external services)."
-      ]
-    },
-    {
-      "id": "REQ-40",
-      "text": "Create a public Blog section in the frontend, including: (1) a blog list page that shows published posts and supports filtering by category/tag, and (2) a blog post detail page for reading a single post with embedded images rendered inline within the post content.",
+      "id": "REQ-43",
+      "text": "Update the app’s primary site URL configuration so the canonical public URL is exactly https://prasadenterprise-epm.caffeine.xyz/ (including updating `SITE_CONFIG.url` in `frontend/src/config/site.ts`).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "recent-messages"
         ],
         "quotes": [
-          "2 - blog should support the images inside the post\n3 - I need categories/tag for blog posts"
+          "https://prasadenterprise-epm.caffeine.xyz/   this url is live, change the url with this",
+          "1 & 3"
         ]
       },
       "acceptanceCriteria": [
-        "A new Blog route exists and is reachable via site navigation.",
-        "Blog list displays published posts in reverse chronological order and shows each post’s title, excerpt/summary, date, categories, and tags.",
-        "Users can filter the blog list by category and/or tag.",
-        "Blog detail page renders the full post content and displays images inline where defined in the post content structure.",
-        "All user-facing text for the blog UI is in English."
+        "`frontend/src/config/site.ts` sets `SITE_CONFIG.url` to `https://prasadenterprise-epm.caffeine.xyz/` (with trailing slash) or a single normalized form used consistently throughout the app.",
+        "No user-facing UI text, links intended to represent the site’s primary URL, or metadata derived from `SITE_CONFIG` displays `https://prasadenterprise.caffeine.xyz`, `https://www.prasadenterprise.caffeine.xyz`, or any draft domain."
       ]
     },
     {
-      "id": "REQ-41",
-      "text": "Create a simple in-site Blog Admin UI for authenticated admins to create, edit, publish/unpublish, and delete blog posts, including a content editor that supports adding images inside the post.",
+      "id": "REQ-44",
+      "text": "Update all internal links or any hardcoded absolute URLs throughout the frontend to use the https://prasadenterprise-epm.caffeine.xyz/ domain (where absolute URLs are used), and remove/replace any remaining references to the old domains `https://prasadenterprise.caffeine.xyz`, `https://www.prasadenterprise.caffeine.xyz`, and any draft URLs such as `https://significant-blush-1gq-draft.caffeine.xyz/`.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "recent-messages"
         ],
         "quotes": [
-          "1 - simple admin UI\n2 - blog should support the images inside the post"
+          "1 & 3"
         ]
       },
       "acceptanceCriteria": [
-        "Admin UI includes login/logout entry points using existing Internet Identity integration.",
-        "Non-admin users cannot access admin actions (UI hides them and backend blocks them).",
-        "Admin can create and edit a post’s title, slug, excerpt/summary, categories, tags, published state, and content.",
-        "The editor supports embedding images inside the post by allowing admins to add image blocks with at least src URL and alt text (and optionally caption).",
-        "After saving, the post is visible on the public Blog pages when published."
+        "A repository-wide search for `prasadenterprise.caffeine.xyz`, `www.prasadenterprise.caffeine.xyz`, and `significant-blush-1gq-draft.caffeine.xyz` returns no remaining user-facing references (excluding historical comments if any, but prefer removing those too).",
+        "Any location where an absolute URL is presented to users (e.g., in copy, share links, SEO/canonical fields if present, or external link targets) uses `https://prasadenterprise-epm.caffeine.xyz/`."
       ]
     },
     {
-      "id": "REQ-42",
-      "text": "Add Blog navigation entry points from the site header and footer so users can reach the Blog from any page.",
+      "id": "REQ-45",
+      "text": "Ensure the admin area remains reachable on the new domain and that any user-facing guidance or navigation that points to the admin area uses the new domain (domain only; do not change admin paths unless already required elsewhere).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "recent-messages"
         ],
         "quotes": [
-          "Also add a Blog page where I can create a blog to improve the SEO of the website"
+          "How can i go to admin page for this website to access the form fill data?",
+          "1 & 3"
         ]
       },
       "acceptanceCriteria": [
-        "Header includes a \"Blog\" navigation item alongside existing links.",
-        "Footer Quick Links includes a \"Blog\" link.",
-        "Navigation uses TanStack Router internal links (no full page reload)."
+        "Visiting the admin route on the new domain works (e.g., `https://prasadenterprise-epm.caffeine.xyz/admin/...` according to the app’s current routing) without requiring draft/admin-preview URLs.",
+        "No user-facing admin URL instructions (if present anywhere in the UI) reference the old domain or a `caffeineAdminToken=` preview URL."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor in backend/main.mo; do not introduce additional backend services.",
-    "Do not edit files under frontend/src/components/ui (read-only); compose existing UI components instead.",
-    "Do not modify immutable hook files (frontend/src/hooks/useInternetIdentity.ts, .tsx; frontend/src/hooks/useActor.ts; frontend/src/main.tsx).",
-    "No external databases, third-party auth providers, or external CMS integrations."
+    "Do not edit any files under `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or anything inside `frontend/src/components/ui` (compose them instead).",
+    "Backend must remain single-actor; do not introduce additional backend services/canisters."
   ],
   "nonGoals": [
-    "Implementing a full WYSIWYG editor with complex formatting (tables, embeds, etc.).",
-    "Implementing in-app image file uploads to the canister (images can be referenced by URL or existing static assets).",
-    "Adding comments, likes, or real-time features for blog posts."
+    "Do not change the app’s route structure or introduce new pages purely to handle this domain change.",
+    "Do not attempt to configure DNS, TLS, or Caffeine platform publishing settings; only update application code/config so it consistently uses the new domain.",
+    "Do not add third-party analytics, redirects, or external URL shorteners."
   ],
   "imageRequirements": {
     "required": [],

@@ -1,112 +1,75 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Blog (public + admin) with categories/tags and inline images",
+  "title": "Switch canonical site URL to prasadenterprise-epm and update all internal domain references",
   "requirements": [
     {
-      "id": "REQ-40",
-      "summary": "Add public Blog list + detail pages with category/tag filtering and inline image rendering from structured post content.",
+      "id": "REQ-43",
+      "summary": "Set the canonical public site URL to https://prasadenterprise-epm.caffeine.xyz/ and ensure SITE_CONFIG is normalized and used consistently.",
       "acceptanceCriteria": [
-        "A new Blog route exists and is reachable via site navigation.",
-        "Blog list displays published posts in reverse chronological order and shows each post’s title, excerpt/summary, date, categories, and tags.",
-        "Users can filter the blog list by category and/or tag.",
-        "Blog detail page renders the full post content and displays images inline where defined in the post content structure.",
-        "All user-facing text for the blog UI is in English."
+        "`frontend/src/config/site.ts` sets `SITE_CONFIG.url` to `https://prasadenterprise-epm.caffeine.xyz/` (with trailing slash) or a single normalized form used consistently throughout the app.",
+        "No user-facing UI text, links intended to represent the site’s primary URL, or metadata derived from `SITE_CONFIG` displays `https://prasadenterprise.caffeine.xyz`, `https://www.prasadenterprise.caffeine.xyz`, or any draft domain."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/BlogListPage.tsx",
-          "operation": "create",
-          "description": "Create the public Blog list page that fetches published posts from the backend actor (via React Query), renders post cards (title, excerpt/summary, date, categories, tags), and supports client-side filtering by category/tag. Use shadcn-ui components (e.g., Card, Button, Badge, Input) for layout and controls. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/BlogPostPage.tsx",
-          "operation": "create",
-          "description": "Create the public Blog post detail page that loads a single post (by slug or id, depending on available route param) and renders full content with inline images. Compose UI using shadcn-ui components (e.g., Card, Badge, Separator). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/blog/BlogPostContentRenderer.tsx",
-          "operation": "create",
-          "description": "Add a renderer that turns the stored post content structure into React output, including image blocks (src, alt, optional caption) displayed inline within the article flow. Ensure safe rendering (no raw HTML injection) and graceful fallback if content is plain text. Use shadcn-ui components where appropriate (e.g., AspectRatio if present, Typography patterns using existing Tailwind classes). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useBlog.ts",
-          "operation": "create",
-          "description": "Add React Query hooks for blog read operations (list posts, get post, list categories/tags derived from posts) using the existing useActor() hook. Keep this file non-JSX (.ts) and ensure queries are disabled until the actor is available."
-        },
-        {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/config/site.ts",
           "operation": "modify",
-          "description": "Register and wire new TanStack Router routes for the Blog list and Blog detail pages (e.g., /blog and /blog/$slugOrId), ensuring they render within the existing SiteLayout and are navigable."
+          "description": "Update `SITE_CONFIG.url` to exactly `https://prasadenterprise-epm.caffeine.xyz/` (ensure a single normalized trailing-slash form)."
+        },
+        {
+          "path": "frontend/src/utils/absoluteUrl.ts",
+          "operation": "create",
+          "description": "Add a small helper to build absolute URLs from `SITE_CONFIG.url` (normalize joining base + path) so future user-facing absolute links consistently use the canonical domain."
         }
       ]
     },
     {
-      "id": "REQ-41",
-      "summary": "Create an authenticated in-site Blog Admin UI for admins to create/edit/publish/unpublish/delete posts with an editor supporting inline image blocks.",
+      "id": "REQ-44",
+      "summary": "Replace all hardcoded old-domain absolute URLs in the frontend with the new canonical domain wherever absolute URLs are used.",
       "acceptanceCriteria": [
-        "Admin UI includes login/logout entry points using existing Internet Identity integration.",
-        "Non-admin users cannot access admin actions (UI hides them and backend blocks them).",
-        "Admin can create and edit a post’s title, slug, excerpt/summary, categories, tags, published state, and content.",
-        "The editor supports embedding images inside the post by allowing admins to add image blocks with at least src URL and alt text (and optionally caption).",
-        "After saving, the post is visible on the public Blog pages when published."
+        "A repository-wide search for `prasadenterprise.caffeine.xyz`, `www.prasadenterprise.caffeine.xyz`, and `significant-blush-1gq-draft.caffeine.xyz` returns no remaining user-facing references (excluding historical comments if any, but prefer removing those too).",
+        "Any location where an absolute URL is presented to users (e.g., in copy, share links, SEO/canonical fields if present, or external link targets) uses `https://prasadenterprise-epm.caffeine.xyz/`."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/pages/BlogAdminPage.tsx",
-          "operation": "create",
-          "description": "Create an admin-only Blog Admin page that lists posts and provides actions to create, edit, publish/unpublish, and delete. Integrate login/logout using the existing Internet Identity hook, and use the backend actor admin check to gate admin controls. Use shadcn-ui components (Table/Card/Dialog/Button/Badge) to keep UI simple. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/BlogAdminEditPage.tsx",
-          "operation": "create",
-          "description": "Create an admin-only edit/create page/view for a single post, including fields for title, slug, excerpt/summary, categories, tags, published state/date, and content. Persist changes via backend actor write methods and show clear error messages on authorization failures. Use shadcn-ui Form primitives (Input, Textarea, Switch, Button) composed in-page. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/blog/BlogPostEditor.tsx",
-          "operation": "create",
-          "description": "Implement a lightweight structured content editor that supports adding/removing/reordering text blocks and image blocks (src, alt, optional caption). Store the editor value as a serialized content structure string compatible with the public renderer. Use shadcn-ui components (Button, Input, Textarea, Card, Dialog) for controls. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/auth/LoginButton.tsx",
-          "operation": "create",
-          "description": "Add a reusable Login/Logout button using the existing useInternetIdentity hook and TanStack Query's queryClient.clear() on logout to clear cached data, following the selected 'authorization' component guidance. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/auth/AdminGate.tsx",
-          "operation": "create",
-          "description": "Create a small guard component that checks authentication state and uses the backend actor admin check to allow access to admin routes; show an English Access Denied state and a login prompt otherwise (per selected 'authorization' component guidance). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useBlogAdmin.ts",
-          "operation": "create",
-          "description": "Add React Query hooks for blog admin write operations (create, update, delete, publish/unpublish) using useActor(), including optimistic UI where safe and consistent error handling for authorization traps."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Register and wire Blog Admin routes (e.g., /admin/blog and /admin/blog/$postIdOrNew) and wrap route components with the AdminGate so non-admins cannot access admin actions via the UI."
-        }
-      ]
-    },
-    {
-      "id": "REQ-42",
-      "summary": "Add Blog navigation entry points in the site header and footer using TanStack Router navigation.",
-      "acceptanceCriteria": [
-        "Header includes a \"Blog\" navigation item alongside existing links.",
-        "Footer Quick Links includes a \"Blog\" link.",
-        "Navigation uses TanStack Router internal links (no full page reload)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/site/Header.tsx",
-          "operation": "modify",
-          "description": "Add a \"Blog\" navigation item to the header navigation using TanStack Router navigation (useNavigate or Link). Ensure it is available from any page, including a workable mobile affordance alongside existing mobile controls. Use existing shadcn-ui Button composition (do not modify ui components). Verify the component's usage instructions before implementing."
-        },
         {
           "path": "frontend/src/components/site/Footer.tsx",
           "operation": "modify",
-          "description": "Add a \"Blog\" link under the Footer \"Quick Links\" section using TanStack Router Link so navigation stays client-side (no full reload). Verify the component's usage instructions before implementing."
+          "description": "Audit for any hardcoded absolute URLs and update any old-domain references; prefer deriving any site absolute links from `SITE_CONFIG.url` (via the new absolute-url helper) to prevent regressions."
+        },
+        {
+          "path": "frontend/src/components/site/Header.tsx",
+          "operation": "modify",
+          "description": "Audit header navigation and any external links (if present now or added later) to ensure no old-domain absolute URLs remain; keep navigation paths relative where possible."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Audit for any hardcoded canonical/OG/meta URLs (if added previously) and ensure no old-domain references remain (keep as-is if none exist)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-45",
+      "summary": "Keep the admin area reachable on the new domain and ensure any user-facing admin navigation/instructions reference the new domain (domain only) without preview token guidance.",
+      "acceptanceCriteria": [
+        "Visiting the admin route on the new domain works (e.g., `https://prasadenterprise-epm.caffeine.xyz/admin/...` according to the app’s current routing) without requiring draft/admin-preview URLs.",
+        "No user-facing admin URL instructions (if present anywhere in the UI) reference the old domain or a `caffeineAdminToken=` preview URL."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/site/Footer.tsx",
+          "operation": "modify",
+          "description": "Add/adjust any user-facing admin navigation or guidance (if present/needed) to point to the existing admin path using the new canonical domain (build absolute URL from `SITE_CONFIG.url` + existing `/admin/...` path); do not mention or require any `caffeineAdminToken=` preview URLs."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Verify existing admin routes remain unchanged and registered (no path changes), ensuring `/admin/...` continues to resolve under the new domain."
+        },
+        {
+          "path": "frontend/src/utils/urlParams.ts",
+          "operation": "modify",
+          "description": "Remove or revise any comments or user-facing references implying admin access requires URL token parameters (e.g., `caffeineAdminToken`) so the codebase does not suggest draft/preview access patterns."
         }
       ]
     }

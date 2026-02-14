@@ -3,6 +3,6 @@
  */
 export const SITE_CONFIG = {
   name: 'Prasad Enterprise',
-  url: 'https://prasadenterprise.caffeine.xyz',
+  url: 'https://prasadenterprise-epm.caffeine.xyz/',
   description: 'Building Foundations, Delivering Excellence',
 } as const;

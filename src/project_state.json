@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 23,
-  "summary": "Build a modern, high-performance lead-generation website for Prasad Enterprise (hardware/building materials) featuring categorized products, 3D/interactive UI effects, and a product inquiry flow that collects selected items and submits a validated lead form. Email sending has been canceled; inquiry submissions will be handled via local storage instead. Add a dedicated, category-wise Gallery page with filters and 3D/hover effects; gallery items use manually provided images with auto-generated product names and categories, and include a small disclaimer “(this is a sample image)”. Remove “TATA steel” branding wherever it appears. Preserve the site URL as https://prasadenterprise.caffeine.xyz. Replace the current blueprint/industrial interactive background with a site-wide 3D floating hardware-items interactive background. Add a Blog system to improve SEO with an in-site admin UI to create/edit posts, support images inside posts, and support categories/tags.",
+  "projectStateVersion": 25,
+  "summary": "Update the Prasad Enterprise site configuration so the primary public URL is changed to https://prasadenterprise-epm.caffeine.xyz/ and update all internal links throughout the app to use the -epm domain (including admin routing), superseding the previous requirement to preserve https://prasadenterprise.caffeine.xyz (no www).",
   "architectural_notes": [
     "Email integration removed per user; inquiry submissions must be handled via local storage instead of sending formatted emails.",
     "Google Maps: include embedded iframe for location display plus a separate external 'Get Directions' link that opens Google Maps on web/app.",
@@ -15,9 +15,10 @@
     "Blog: add an in-site admin UI for creating/editing posts; posts must support embedded images and categories/tags for SEO/content organization."
   ],
   "known_issues": [
-    "Site is currently not using the exact user-provided logo; must re-implement logo correctly."
+    "Site is currently not using the exact user-provided logo; must re-implement logo correctly.",
+    "URL requirements conflict: project previously required https://prasadenterprise.caffeine.xyz (no www), but user now requests switching canonical URL + internal links to https://prasadenterprise-epm.caffeine.xyz/; existing config/links may still reference the old domain until updated."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-cohesive-modern-industrial-chic-visual-theme-for-the-entire-site-using-slate-grey-deep-orange-gold-accents-and-clean-white-with-consistent-typography-spacing-and-component-styling-across-all-pages",
@@ -338,6 +339,14 @@
         "REQ-42"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-app-s-primary-site-url-configuration-so-the-canonical-public-url-is-exactly-https-prasadenterprise-epm-caffeine-xyz-including-updating-site-config-url-in-frontend-src-config-site-ts",
+      "title": "Update the app’s primary site URL configuration so the canonical public URL is exactly https://prasadenterprise-epm.caffeine.xyz/ (including updating `SITE_CONFIG.url` in `frontend/src/config/site.ts`).",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -462,6 +471,28 @@
       "summary": "Add an admin authorization mechanism using Internet Identity: gate all blog write operations in the backend by checking the caller principal against a configured allowlist of admin principals.",
       "reqIds": [
         "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Change the site’s primary public URL to https://prasadenterprise-epm.caffeine.xyz/ and update all internal links across the app to use the -epm domain (including admin link/path usage)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Update all internal links or any hardcoded absolute URLs throughout the frontend to use the https://prasadenterprise-epm.caffeine.xyz/ domain (where absolute URLs are used), and remove/replace any remaining references to the old domains `https://prasadenterprise.caffeine.xyz`, `https://www.prasadenterprise.caffeine.xyz`, and any draft URLs such as `https://significant-blush-1gq-draft.caffeine.xyz/`.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Ensure the admin area remains reachable on the new domain and that any user-facing guidance or navigation that points to the admin area uses the new domain (domain only; do not change admin paths unless already required elsewhere).",
+      "reqIds": [
+        "REQ-45"
       ],
       "status": "pending"
     }

@@ -22,7 +22,7 @@
   "frontend/tailwind.config.js": "Tailwind configuration extending the theme with industrial color palette, custom shadows for 3D effects, Inter font family, and animation utilities.",
   "frontend/src/hooks/useQueries.ts": "Placeholder file for future backend integration; currently minimal as all data is managed client-side.",
   "frontend/src/config/contact.ts": "Centralized contact information configuration containing phone numbers, email, store address, and Google Maps URLs for consistent use across the application.",
-  "frontend/src/config/site.ts": "Site configuration constants including the primary site URL (https://prasadenterprise.caffeine.xyz), name, and description for consistent use across the application.",
+  "frontend/src/config/site.ts": "Site configuration constants with the canonical URL set to https://prasadenterprise-epm.caffeine.xyz/ for consistent use across the application.",
   "frontend/src/utils/galleryInference.ts": "Local deterministic inference utilities that auto-generate product names and categories from image filenames using keyword matching and token parsing, with fallback to \"Other\" category for low-confidence cases.",
   "frontend/src/data/gallery.ts": "Static gallery data module that references existing generated images from public assets and applies auto-inference to generate names and categories for each gallery item.",
   "frontend/src/pages/GalleryPage.tsx": "Gallery page component with category filtering, responsive grid layout, 3D hover card effects, and disclaimer text \"(this is a sample image)\" displayed in small font below each product name.",
@@ -36,5 +36,6 @@
   "frontend/src/pages/BlogListPage.tsx": "Public blog list page with post cards, category/tag filtering, search functionality, and responsive sidebar layout using shadcn-ui components.",
   "frontend/src/pages/BlogPostPage.tsx": "Public blog post detail page displaying full post content with inline images, categories, tags, and back navigation.",
   "frontend/src/pages/BlogAdminPage.tsx": "Admin-only blog management page with post list table, create/edit/delete actions using proper TanStack Router navigation with params, and authentication gate using Internet Identity.",
-  "frontend/src/pages/BlogAdminEditPage.tsx": "Admin-only blog post editor page with form fields for title, author, categories, tags, and structured content editor for creating/updating posts."
+  "frontend/src/pages/BlogAdminEditPage.tsx": "Admin-only blog post editor page with form fields for title, author, categories, tags, and structured content editor for creating/updating posts.",
+  "frontend/src/utils/absoluteUrl.ts": "Helper utility function that builds absolute URLs by combining the canonical site URL from SITE_CONFIG with relative paths, ensuring consistent URL normalization."
 }
